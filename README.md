@@ -8,7 +8,7 @@ Install the userscript by Norin located here: [Bondage Club XToys Integration](h
 ## Usage
 
 After running the server head to the following address [Localhost](http://localhost:3000) recomended chrome
-Configure the server as needed click start once the main server is running use the command in BC
+configure the server as needed click start once the main server is running use the command in BC
 
 ```
 /bcxtoys c ws://127.0.0.1:12300
