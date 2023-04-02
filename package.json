@@ -1,0 +1,28 @@
+{
+  "name": "bc-bridge",
+  "version": "1.0.0",
+  "description": "Convert Actions and Activities from Bondage Club to toy events",
+  "main": "server.js",
+  "bin": "server.js",
+  "scripts": {
+    "build:css": "tailwindcss build src/styles.css -o public/styles.css",
+    "start": "node server.js",
+    "build": "pkg ."
+  },
+  "pkg": {
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "0.27.2",
+    "express": "^4.18.2",
+    "tailwindcss": "^3.3.1",
+    "ws": "^8.13.0"
+  },
+  "keywords": []
+}

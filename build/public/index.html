@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <title>BC-Bridge</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles2.css" />
+  </head>
+  <body class="bg-gray-900">
+  <div class="bg-gray-900  text-white font-sans">
+    <div class="flex flex-col h-screen-minus-10">
+      <div id="main-content" class="flex-grow overflow-auto mt-2">
+        <div id="nav" class="fixed top-0 left-0 bottom-0 w-52 bg-gray-800 p-2 shadow-md">
+          <button id="home-button" class="flex w-full items-center mb-2 bg-gray-600 px-3 py-2 rounded">
+            <img src="./imgs/home.svg" height="20" width="20" class="mr-2"></img>
+            <span>Main Settings</span>
+          </button>
+          <button id="plug-settings-button" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
+            <img src="./imgs/link.svg" height="20" width="20" class="mr-2"></img>
+            <span>Intiface Toys</span>
+          </button>
+          <button id="all-json-button" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
+            <img src="./imgs/actions.svg" height="20" width="20" class="mr-2"></img>
+            <span>Actions Intiface</span>
+          </button>
+          <button id="local-settings-button" class="block w-full text-middle mb-2 bg-gray-700 px-3 py-2 rounded" style="display: none;">2B Links </a>
+          </button>
+          <button id="all-json-button2" class="block w-full text-middle mb-2 bg-gray-700 px-3 py-2 rounded" style="display: none;">Actions 2B </a>
+          </button>
+          <button id="shook-button" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
+            <img src="./imgs/pishock.svg" height="20" width="20" class="mr-2"></img>
+            <span>PiShock Settings</span>
+          </button>
+          <button id="logsBtn" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
+            <img src="./imgs/logs.svg" height="20" width="20" class="mr-2"></img>
+            <span>Logs</span>
+          </button>
+          <button id="about-button" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
+            <img src="./imgs/info.svg" height="20" width="20" class="mr-2"></img>
+            <span>About</span>
+          </button>
+          <button id="updateserver" class="flex w-full items-center mb-2 bg-green-600 px-3 py-2 rounded">
+            <img src="./imgs/server.svg" height="20" width="20" class="mr-2"></img>
+            <span>Update</span>
+          </button>
+          <button id="save" class="flex w-full items-center mb-2 bg-green-600 px-3 py-2 rounded">
+            <img src="./imgs/save.svg" height="20" width="20" class="mr-2"></img>
+            <span>Save</span>
+          </button>
+        </div>
+        <div id="navdark" class="fixed top-10 left-52 bottom-0 w-1 bg-gray-900 shadow-md"></div>
+        <div id="content" class="ml-56 p-4">
+          <div id="home" class="home-page" style="display: none;">
+            <img src="./imgs/home.svg" height="20" width="20"></img>
+            <h2 class="text-2xl font-bold mb-2 align-middle">Main Server</h2>
+            <p> Main server handles requests from BC (mod required) </p>
+            <p class="mb-2">connect using chat command : </p>
+            <div class="mb-6 flex">
+              <input type="text" value="/bcxtoys c ws://127.0.0.1:12300" id="text-to-copy" readonly class="no-border bg-gray-700 w-96 h-8 text-center py-2 rounded-l-2xl" />
+              <button id="copy-button" class="bg-gray-800 text-gray-200 h-8 px-6 py-2 rounded-r-2xl flex hover:bg-gray-600"><img src="./imgs/clipboard.svg" height="18" width="18" class="mr-2"></img><span class="text-xs mr-2 pr-2">Copy</span></button>
+              
+          </div>
+            <div class="input-group flex flex-row mb-4">
+              <button id="mainStart" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Start</button>
+              <button id="mainStop" class="w-full bg-red-600 px-3 py-2 rounded">Stop</button>
+            </div>
+            <div class="input-group flex mb-4">
+              <div id="mainConnectStatus" class="w-6 h-6 bg-red-700 rounded-full"></div>
+              <p id="mainConnectStatus_p" class="mb-4 ml-2 font-thin">Offline</p>
+            </div>
+            <!-- Plug section -->
+            <div class="relative transparent-bg">
+            <fieldset class="mb-6">
+              <legend class="text-lg font-semibold mb-2">Intiface Central</legend>
+              <p class="mb-4">Forward actions onto Intiface Central (buttplug.io) <br>Remember to update Intiface link and Intiface settings </p>
+              <div class="input-group">
+                <label class="switch">
+                  <input type="checkbox" id="IntifaceEnabled">
+                  <span class="slider round"></span>
+                </label>
+                <label for="IntifaceEnabled" class="ml-2">Enabled</label>
+              </div>
+              <div class="input-group flex flex-row mb-4">
+                <button id="PlugConnect" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Connect</button>
+                <button id="PlugDisconnect" class="w-full bg-red-600 px-3 py-2 rounded mr-2">Disconnect</button>
+                <button id="PlugSync" class="w-full bg-green-600 px-3 py-2 rounded">Sync</button>
+              </div>
+              <div class="input-group flex">
+                <div id="PlugConnectStatus" class="w-6 h-6 bg-red-700 rounded-full"></div>
+                <p id="PlugConnectStatus_p" class="ml-2 font-thin">Offline</p>
+              </div>
+            </fieldset>
+          </div>
+            <!-- Toy section -->
+            <fieldset class="mb-4" style="display: none;">
+              <legend class="text-lg font-semibold mb-2">xToys</legend>
+              <p class="mb-4">Information about xToys</p>
+              <div class="input-group mb-4">
+                <label for="xToyAPIInput" class="block mb-1">API Input:</label>
+                <input type="text" id="xToyAPIInput" class="focus:outline-none focus:ring focus:border-blue-200  bg-gray-700 rounded px-3 py-2 w-full">
+              </div>
+              <div class="input-group">
+                <label for="xToyEnabled">Enabled:</label>
+                <label class="switch">
+                  <input type="checkbox" id="xToyEnabled">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="input-group">
+                <button id="xToyConnect" class="bg-blue-600 px-3 py-2 rounded mr-2">Connect</button>
+                <button id="xToyDisconnect" class="bg-red-600 px-3 py-2 rounded">Disconnect</button>
+              </div>
+            </fieldset>
+            <!-- Local section -->
+            <fieldset class="mb-4" style="display: none;">
+              <legend class="text-lg font-semibold mb-2">Local</legend>
+              <p class="mb-4">Information about Local</p>
+              <div class="input-group">
+                <label for="Local2BEnabled">Enabled:</label>
+                <label class="switch">
+                  <input type="checkbox" id="Local2BEnabled">
+                  <span class="slider round"></span>
+                </label>
+                <div class="input-group mb-4">
+                  <label for="Local2BIPInput" class="block mb-1">IP Input:</label>
+                  <input type="text" pattern="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" title="Please enter a valid IP address" id="Local2BIPInput" class="bg-gray-700 rounded px-3 py-2 w-full">
+                  <label for="Local2BPortInput" class="block mb-1">Port Input:</label>
+                  <input type="text" id="Local2BPortInput" class="bg-gray-700 rounded px-3 py-2 w-full">
+                </div>
+                <div class="input-group">
+                  <button id="LocalConnect" class="bg-blue-600 px-3 py-2 rounded mr-2">Connect</button>
+                  <button id="LocalDisconnect" class="bg-red-600 px-3 py-2 rounded">Disconnect</button>
+                </div>
+            </fieldset>
+            <!-- Shook section -->
+            <fieldset class="mb-4">
+              <legend class="text-lg font-semibold mb-2">PiShock</legend>
+              <p class="mb-4">Connect upto 8 PiShocks. Remember to update the PiShock settings. <br>API key can be found under account on the PiShock site username is case-sensitive </p>
+              <div class="input-group mb-4">
+                <label for="PiShockUsername" class="block mb-1">Username:</label>
+                <input type="text" id="PiShockUsername" class="bg-gray-700 rounded px-3 py-2 w-full">
+              </div>
+              <div class="input-group mb-4">
+                <label for="PiShockAPIKey" class="block mb-1">API Key:</label>
+                <input type="text" id="PiShockAPIKey" class="bg-gray-700 rounded px-3 py-2 w-full">
+              </div>
+              <div id="pi-overview" class="flex flex-row mb-4">
+                <div id="pi-1" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">1</p>
+                </div>
+                <div id="pi-2" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">2</p>
+                </div>
+                <div id="pi-3" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">3</p>
+                </div>
+                <div id="pi-4" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">4</p>
+                </div>
+                <div id="pi-5" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">5</p>
+                </div>
+                <div id="pi-6" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">6</p>
+                </div>
+                <div id="pi-7" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">7</p>
+                </div>
+                <div id="pi-8" class="w-6 h-6 bg-red-700 rounded-full m-1">
+                  <p class="text-center font-semibold">8</p>
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="switch">
+                  <input type="checkbox" id="PiShockEnabled">
+                  <span class="slider round"></span>
+                </label>
+                <label for="PiShockEnabled">Enabled</label>
+              </div>
+            </fieldset>
+          </div>
+          <div id="json-page" style="display: none;">
+            <div id="preheaderJson"></div>
+            <div id="headerJson">
+              <h2 class="text-2xl font-bold mb-4">Header</h2>
+            </div>
+            <p id="postheader" class="mb-4"></p>
+            <div id="sub-nav">
+              <div class="flex flex-row mb-2">
+                <button id="ItemNeck-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemNeck</button>
+                <button id="ItemArms-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemArms</button>
+                <button id="ItemNipples-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemNipples</button>
+                <button id="ItemBreast-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemBreast</button>
+              </div>
+              <div class="flex flex-row mb-2">
+                <button id="ItemVulva-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemVulva</button>
+                <button id="ItemVulvaPiercings-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemVulvaPiercings</button>
+                <button id="ItemButt-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemButt</button>
+                <button id="ItemLegs-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemLegs</button>
+              </div>
+              <div class="flex flex-row mb-2">
+                <button id="ItemPelvis-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemPelvis</button>
+                <button id="ItemFeet-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemFeet</button>
+                <button id="ItemBoots-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemBoots</button>
+                <button id="ItemDevices-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">ItemDevices</button>
+              </div>
+              <div class="flex flex-row mb-2">
+                <button id="activityOnOther-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">activityOnOther</button>
+              </div>
+            </div>
+            <div id="sub-nav-shook" class="flex flex-row mb-4">
+              <button id="py1-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 1</button>
+              <button id="py2-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 2</button>
+              <button id="py3-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 3</button>
+              <button id="py4-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 4</button>
+            </div>
+            <div id="sub-nav-shook-2" class="flex flex-row mb-4">
+              <button id="py5-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 5</button>
+              <button id="py6-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 6</button>
+              <button id="py7-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 7</button>
+              <button id="py8-button" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">PI Shock 8</button>
+            </div>
+            <fieldset id="ShookDevice" class="mb-6">
+              <legend id="pideviceheader" class="text-lg font-semibold mb-2">Pi Shock 1</legend>
+              <div class="input-group mb-4">
+                <label for="ShookShareCode" class="block mb-1">ShareCode:</label>
+                <input type="text" id="ShookShareCode" class="bg-gray-700 rounded px-3 py-2 w-full">
+              </div>
+              <div class="input-group mb-4 flex flex-row">
+                <div class="flex flex-row w-full pr-2 pl-2">
+                  <label for="VibrateMaxInput" class="align-middle px-3 py-2 w-full">Max Vibrate:</label>
+                  <input type="number" id="VibrateMaxInput" class="bg-gray-700 px-3 py-2 w-full rounded-l-lg custom-input" min="0" max="100">
+                  <div class="flex flex-col">
+                    <button onmousedown="startIncrement(document.getElementById('VibrateMaxInput'))" onmouseup="stopIncrement()" onmouseleave="stopIncrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-tr-lg focus:outline-none">+</button>
+                    <button onmousedown="startDecrement(document.getElementById('VibrateMaxInput'))" onmouseup="stopDecrement()" onmouseleave="stopDecrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-br-lg focus:outline-none">-</button>
+                  </div>
+                </div>
+                <div class="flex flex-row w-full pr-2 pl-2">
+                  <label for="ShockMaxInput" class="align-middle px-3 py-2 w-48">Max Shock:</label>
+                  <input type="number" id="ShockMaxInput" class="bg-gray-700 px-3 py-2 w-full rounded-l-lg custom-input" min="0" max="100">
+                  <div class="flex flex-col">
+                    <button onmousedown="startIncrement(document.getElementById('ShockMaxInput'))" onmouseup="stopIncrement()" onmouseleave="stopIncrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-tr-lg focus:outline-none">+</button>
+                    <button onmousedown="startDecrement(document.getElementById('ShockMaxInput'))" onmouseup="stopDecrement()" onmouseleave="stopDecrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-br-lg focus:outline-none">-</button>
+                  </div>
+                </div>
+                
+                
+              </div>
+              
+              <div class="input-group flex flex-row mb-4">
+                <button id="VibratePITest" class="w-full bg-red-600 px-3 py-2 rounded mr-2">Max Vibrate Test</button>
+                <button id="ShockPiTest" class="w-full bg-red-600 px-3 py-2 rounded">Max Shock Test</button>
+              </div>
+              <div class="input-group flex flex-row">
+                <div class="flex flex-row w-full">
+                  <label for="deviceEnable" class="pt-1">Enable:</label>
+                  <label class="switch">
+                    <input type="checkbox" id="deviceEnable">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <div class="flex flex-row w-full">
+                  <label for="VibdeviceEnable" class="pt-1">Vibrate:</label>
+                  <label class="switch">
+                    <input type="checkbox" id="VibdeviceEnable">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <div class="flex flex-row w-full">
+                  <label for="ShookdeviceEnable" class="pt-1">Shock:</label>
+                  <label class="switch">
+                    <input type="checkbox" id="ShookdeviceEnable">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="input-group"></div>
+              <div class="input-group flex flex-row">
+                <button id="LoadVibe" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Vibrate Data</button>
+                <button id="LoadShock" class="w-full bg-blue-600 px-3 py-2 rounded">Shock Data</button>
+              </div>
+            </fieldset>
+            <div class="floating-search">
+              <div>
+              <span id="moveingheader-title" class="text-xs"></span><span class="text-xs"> > </span><span id="moveingheader-subtitle" class="text-xs"></span>
+              </div>
+              <input type="text" id="search-input" class="inline-block align-middle" placeholder="Search..." />
+              <button id="search-button">
+                <img src="./imgs/search.svg" height="20" width="20" class="inline-block align-middle"></img>
+              </button>
+              <button id="previous-button">
+                <img src="./imgs/back.svg" height="20" width="20" class="inline-block align-middle"></img>
+              </button>
+              <button id="next-button">
+                <img src="./imgs/forward.svg" height="20" width="20" class="inline-block align-middle"></img>
+              </button>
+              <button id="back-to-top">
+                <img src="./imgs/top.svg" height="20" width="20" class="inline-block align-middle"></img>
+              </button>
+            </div>
+            <div id="title"></div>
+            <div id="json-data" class="json-data-page" style="display: block;">
+              <!-- The JSON data will be displayed here -->
+            </div>
+          </div>
+          <div id="plug-settings" style="display: none;">
+            <img src="./imgs/link.svg" height="20" width="20"></img>
+            <h2 class="text-2xl font-bold mb-4">Intiface Toys</h2>
+            <p>Link devices from Intiface to body parts then click save.</p>
+            <div class="flex flex-wrap">
+              <div class="input-group m-4">
+                <label for="plugSetting1" class="block mb-1">ItemNeck:</label>
+                <select id="ItemNeck" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting2" class="block mb-1">ItemArms:</label>
+                <select id="ItemArms" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting3" class="block mb-1">ItemNipples:</label>
+                <select id="ItemNipples" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting4" class="block mb-1">ItemBreast:</label>
+                <select id="ItemBreast" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting5" class="block mb-1">ItemVulva:</label>
+                <select id="ItemVulva" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting6" class="block mb-1">ItemVulvaPiercings:</label>
+                <select id="ItemVulvaPiercings" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting7" class="block mb-1">ItemButt:</label>
+                <select id="ItemButt" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting8" class="block mb-1">ItemPelvis:</label>
+                <select id="ItemPelvis" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting9" class="block mb-1">ItemLegs:</label>
+                <select id="ItemLegs" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting10" class="block mb-1">ItemFeet:</label>
+                <select id="ItemFeet" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting11" class="block mb-1">ItemBoots:</label>
+                <select id="ItemBoots" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting12" class="block mb-1">ItemDevices:</label>
+                <select id="ItemDevices" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="input-group m-4">
+                <label for="plugSetting13" class="block mb-1">activityOnOther:</label>
+                <select id="activityOnOther" class="bg-gray-700 rounded px-3 py-2 w-40">
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <p class="text-center text-sm text-slate-500">Note: if devices do not show try checking connection, Intiface will only allow one program to connect to it at a time. if the Intiface shows connected (BCBridge Connected) try clicking the sync button on the main page </p>
+            </div>
+          </div>
+          <div id="local-settings" style="display: none;">
+            <h2 class="text-2xl font-bold mb-4">Local Settings</h2>
+            <div class="input-group mb-4">
+              <label for="ChannelA" class="block mb-1">Channel A:</label>
+              <select id="ChannelA" class="bg-gray-700 rounded px-3 py-2 w-full">
+                <option value="None">None</option>
+              </select>
+            </div>
+            <div class="input-group mb-4">
+              <label for="ChannelB" class="block mb-1">Channel B:</label>
+              <select id="ChannelB" class="bg-gray-700 rounded px-3 py-2 w-full">
+                <option value="None">None</option>
+              </select>
+            </div>
+          </div>
+          <div id="about" class="about-page" style="display: none;">
+            <img src="./imgs/info.svg" height="20" width="20"></img>
+            <h2 class="text-2xl font-bold mb-2">BC-Bridge</h2>
+            <p class="mb-4 text-xs">Version v1.0 <br> by Fro </p>
+            <p class="mb-4"> This application will bridge the connection between actions and toys in Bondage Club. </p>
+            <h3 class="text-1xl font-bold mb-4">Requirements</h3>
+            <p class="mb-4"> requires the script <a href="https://github.com/ItsNorin/Bondage-Club-XToys-Integration" id="BondageClubXtoy" target="_blank" class="font-black text-blue-500">Bondage Club XToys Integration</a>
+              <br>(https://github.com/ItsNorin/Bondage-Club-XToys-Integration) by Norin
+            </p>
+            <p class="text-xs text-slate-500"> Copyright (c) 2023 Fro <br>
+              <br> Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: <br>
+              <br> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. <br>
+              <br> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+          </div>
+          <div id="logs-page" class="Log-page" style="display: none;">
+            <img src="./imgs/logs.svg" height="20" width="20"></img>
+            <h2 class="text-2xl font-bold mb-4">Logs</h2>
+            <div class="flex flex-col h-screen-minus-100">
+              <div id="logsContainer" class="flex-grow overflow-y-scroll pb-4">
+                <pre id="logsContent" class="text-sm pb-4">
+                </pre>
+              </div>            
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./src/logFunctions.js"></script>
+    <script src="./src/pageFunctions.js"></script>
+    <script src="./src/toastFunctions.js"></script>
+    <script src="renderer.js"></script>
+  </div>
+  
+  </body>
+</html>

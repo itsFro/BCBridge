@@ -1,0 +1,161 @@
+.h-screen-minus-100 {
+    height: calc(100vh - 120px);
+   }
+   .h-screen-minus-10 {
+     height: calc(100vh - 10px);
+   }
+   input {
+     background-color: #374151;
+     transition: background-color 0.8s ease-in-out;
+   }
+
+   input:focus {
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(162, 161, 209, 0.884);
+     background-color: #475569;
+   }
+   input.no-border {
+    border: none;
+  }
+  
+input.no-border:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  input.custom-input {
+border: none;
+  }
+  
+  input.custom-input:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 3px rgba(162, 161, 209, 0.884);
+    background-color: #475569;
+  }
+
+   .floating-search {
+     position: fixed;
+     top: 20px;
+     right: 40px;
+     background-color: #384152;
+     padding: 5px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     z-index: 100;
+   }
+
+   .switch {
+     position: relative;
+     display: inline-block;
+     width: 48px;
+     height: 28px;
+     margin: 2px;
+     margin-bottom: 25px;
+   }
+
+   .switch input {
+     opacity: 0;
+     width: 0;
+     height: 0;
+   }
+
+   .slider {
+     position: absolute;
+     cursor: pointer;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: #384152;
+     transition: 0.4s;
+   }
+
+   .slider:before {
+     position: absolute;
+     content: "";
+     height: 22px;
+     width: 22px;
+     left: 3px;
+     bottom: 3px;
+     background-color: white;
+     transition: 0.4s;
+   }
+
+   input:checked+.slider {
+     background-color: #2196F3;
+   }
+
+   input:checked+.slider:before {
+     transform: translateX(22px);
+   }
+
+   .slider.round {
+     border-radius: 28px;
+   }
+
+   .slider.round:before {
+     border-radius: 50%;
+   }
+
+   .toast {
+     position: fixed;
+     min-width: 100px;
+     max-width: 450px;
+     padding: 8px;
+     color: #fff;
+     background-color: #333;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+     opacity: 0;
+     transition: opacity 0.5s ease-in-out;
+     border-radius: 4px;
+     right: 25px;
+   }
+
+   .toast.show {
+     opacity: 1;
+   }
+
+   .title-bar {
+     -webkit-app-region: drag;
+   }
+
+   .title-bar button {
+     -webkit-app-region: no-drag;
+   }
+
+   ::-webkit-scrollbar {
+     width: 10px;
+   }
+
+   ::-webkit-scrollbar-track {
+     background-color: rgba(31, 41, 55, 0.8);
+   }
+
+   ::-webkit-scrollbar-thumb {
+     background-color: rgba(75, 85, 99, 0.8);
+     border-radius: 8px;
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+     background-color: rgba(209, 213, 219, 0.8);
+   }
+
+     /* For Firefox */
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(75, 85, 99, 0.8) rgba(31, 41, 55, 0.8);
+  }
+  
+  /* For IE */
+  body {
+    -ms-overflow-style: none;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  input[type=number] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+  }

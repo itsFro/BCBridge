@@ -1,0 +1,40 @@
+{
+  "Default": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Bite": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Caress": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "MassageHands": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Tickle": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Spank": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Wiggle": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "ShockItem": {
+    "CattleProd": {
+      "Amount": 10,
+      "Duration": 3000
+    },
+    "ShockWand": {
+      "Amount": 10,
+      "Duration": 3000
+    }
+  }
+}

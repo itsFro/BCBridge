@@ -1,0 +1,370 @@
+{
+  "Toys": {
+    "low": 25,
+    "medium": 50,
+    "high": 75,
+    "max": 100
+  },
+  "Default": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Nibble": {
+    "Amount": 23,
+    "Duration": 3000
+  },
+  "Lick": {
+    "Amount": 18,
+    "Duration": 6000
+  },
+  "Kiss": {
+    "Amount": 18,
+    "Duration": 3000
+  },
+  "Caress": {
+    "Amount": 18,
+    "Duration": 8000
+  },
+  "Slap": {
+    "Amount": 65,
+    "Duration": 2000
+  },
+  "MasturbateTongue": {
+    "Amount": 38,
+    "Duration": 15000
+  },
+  "MasturbateHand": {
+    "Amount": 38,
+    "Duration": 15000
+  },
+  "MasturbateFist": {
+    "Amount": 58,
+    "Duration": 10000
+  },
+  "MasturbateFoot": {
+    "Amount": 48,
+    "Duration": 15000
+  },
+  "TriggerShock0": {
+    "Amount": 70,
+    "Duration": 1000
+  },
+  "TriggerShock1": {
+    "Amount": 80,
+    "Duration": 1200
+  },
+  "TriggerShock2": {
+    "Amount": 100,
+    "Duration": 1400
+  },
+  "ShockItem": {
+    "ShockWand": {
+      "Amount": 90,
+      "Duration": 2000
+    },
+    "CattleProd": {
+      "Amount": 100,
+      "Duration": 2000
+    }
+  },
+  "SpankItem": {
+    "Baguette": {
+      "Amount": 18,
+      "Duration": 1000
+    },
+    "Belt": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Broom": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Cane": {
+      "Amount": 80,
+      "Duration": 1500
+    },
+    "Crop": {
+      "Amount": 80,
+      "Duration": 1500
+    },
+    "Flogger": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Gavel": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Hairbrush": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "HeartCrop": {
+      "Amount": 80,
+      "Duration": 1500
+    },
+    "Paddle": {
+      "Amount": 80,
+      "Duration": 1500
+    },
+    "PetToy": {
+      "Amount": 60,
+      "Duration": 1500
+    },
+    "RainbowWand": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Ruler": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Spatula": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "TennisRacket": {
+      "Amount": 70,
+      "Duration": 1500
+    },
+    "Whip": {
+      "Amount": 100,
+      "Duration": 1500
+    },
+    "WhipPaddle": {
+      "Amount": 90,
+      "Duration": 1500
+    }
+  },
+  "TickleItem": {
+    "ElectricToothbrush": {
+      "Amount": 18,
+      "Duration": 6000
+    },
+    "Feather": {
+      "Amount": 22,
+      "Duration": 6000
+    },
+    "FeatherDuster": {
+      "Amount": 28,
+      "Duration": 7000
+    },
+    "LongDuster": {
+      "Amount": 28,
+      "Duration": 7000
+    },
+    "PetToy": {
+      "Amount": 28,
+      "Duration": 6000
+    },
+    "Toothbrush": {
+      "Amount": 18,
+      "Duration": 6000
+    }
+  },
+  "MasturbateItem": {
+    "VibratingWand": {
+      "Amount": 70,
+      "Duration": 10000
+    },
+    "ElectricToothbrush": {
+      "Amount": 20,
+      "Duration": 10000
+    },
+    "LargeDildo": {
+      "Amount": 30,
+      "Duration": 10000
+    },
+    "SmallDildo": {
+      "Amount": 20,
+      "Duration": 10000
+    },
+    "SmallVibratingWand": {
+      "Amount": 50,
+      "Duration": 10000
+    },
+    "Vibrator": {
+      "Amount": 25,
+      "Duration": 10000
+    }
+  },
+  "RubItem": {
+    "Ballgag": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Cane": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "TapeRoll": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Crop": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "GlassFilled": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Sword": {
+      "Amount": 12,
+      "Duration": 4000
+    },
+    "HeartCrop": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "IceCube": {
+      "Amount": 22,
+      "Duration": 4000
+    },
+    "LargeDildo": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "RopeCoilLong": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "LongSock": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Lotion": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Phone1": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Phone2": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "Paddle": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "Panties": {
+      "Amount": 18,
+      "Duration": 3000
+    },
+    "PotionBottle": {
+      "Amount": 22,
+      "Duration": 4000
+    },
+    "ShockRemote": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "RopeCoilShort": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "SmallDildo": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "SmallVibratingWand": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "Towel": {
+      "Amount": 18,
+      "Duration": 3000
+    },
+    "VibratingWand": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "Vibrator": {
+      "Amount": 22,
+      "Duration": 3000
+    },
+    "VibeRemote": {
+      "Amount": 20,
+      "Duration": 3000
+    },
+    "WhipPaddle": {
+      "Amount": 22,
+      "Duration": 3000
+    }
+  },
+  "Inject": {
+    "MedicalInjector": {
+      "Amount": 10,
+      "Duration": 20000
+    }
+  },
+  "RollItem": {
+    "WartenbergWheel": {
+      "Amount": 30,
+      "Duration": 8000
+    }
+  },
+  "PenetrateSlow": {
+    "LargeDildo": {
+      "Amount": 40,
+      "Duration": 12000
+    },
+    "SmallDildo": {
+      "Amount": 30,
+      "Duration": 12000
+    },
+    "DoubleEndDildo": {
+      "Amount": 32,
+      "Duration": 12000
+    },
+    "Penis": {
+      "Amount": 45,
+      "Duration": 12000
+    },
+    "StraponPanties": {
+      "Amount": 35,
+      "Duration": 12000
+    },
+    "StrapOnSmooth": {
+      "Amount": 35,
+      "Duration": 12000
+    },
+    "StrapOnStuds": {
+      "Amount": 38,
+      "Duration": 12000
+    }
+  },
+  "PenetrateFast": {
+    "LargeDildo": {
+      "Amount": 70,
+      "Duration": 17000
+    },
+    "SmallDildo": {
+      "Amount": 60,
+      "Duration": 17000
+    },
+    "DoubleEndDildo": {
+      "Amount": 62,
+      "Duration": 17000
+    },
+    "Penis": {
+      "Amount": 85,
+      "Duration": 17000
+    },
+    "StraponPanties": {
+      "Amount": 65,
+      "Duration": 17000
+    },
+    "StrapOnSmooth": {
+      "Amount": 65,
+      "Duration": 17000
+    },
+    "StrapOnStuds": {
+      "Amount": 68,
+      "Duration": 17000
+    }
+  }
+}

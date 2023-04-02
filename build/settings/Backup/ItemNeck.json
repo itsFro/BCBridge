@@ -1,0 +1,64 @@
+{
+  "Default": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Nibble": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Lick": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Kiss": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Bite": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Caress": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "MassageHands": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Tickle": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Grope": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "Choke": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "TriggerShock0": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "TriggerShock1": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "TriggerShock2": {
+    "Amount": 10,
+    "Duration": 3000
+  },
+  "ShockItem": {
+    "ShockWand": {
+      "Amount": 10,
+      "Duration": 3000
+    },
+    "CattleProd": {
+      "Amount": 10,
+      "Duration": 3000
+    }
+  }
+}

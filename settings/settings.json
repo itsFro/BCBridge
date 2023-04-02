@@ -1,0 +1,19 @@
+{
+  "Intiface": {
+    "Enabled": false
+  },
+  "xToy": {
+    "APIInput": "",
+    "Enabled": false
+  },
+  "Local2B": {
+    "Enabled": false,
+    "Local2BIPInput": "",
+    "Local2BPortInput": ""
+  },
+  "PiShock": {
+    "Enabled": false,
+    "Username": "",
+    "APIKey": ""
+  }
+}
