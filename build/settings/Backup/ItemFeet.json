@@ -1,40 +1,49 @@
 {
   "Default": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "Bite": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "Caress": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "MassageHands": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "Tickle": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "Spank": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "Wiggle": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+"FunScript": false
   },
   "ShockItem": {
     "CattleProd": {
       "Amount": 10,
-      "Duration": 3000
+      "Duration": 3000,
+"FunScript": false
     },
     "ShockWand": {
       "Amount": 10,
-      "Duration": 3000
+      "Duration": 3000,
+"FunScript": false
     }
   }
 }

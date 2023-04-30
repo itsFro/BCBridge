@@ -6,5 +6,6 @@
     "max": 100
   },
 "Default":{"Amount":10,
-"Duration":3000}
+"Duration":3000,
+"FunScript": false}
 }

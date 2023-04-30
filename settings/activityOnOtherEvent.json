@@ -1,57 +1,68 @@
 {
   "Default": {
     "Amount": 60,
-    "Duration": 12000
+    "Duration": 12000,
+    "FunScript": false
   },
   "ItemVulva": {
     "Penis": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": true
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": true
       }
     },
     "DoubleEndDildo": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": true
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": true
       }
     },
     "StraponPanties": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnSmooth": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnStuds": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     }
   },
@@ -59,51 +70,61 @@
     "Penis": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "DoubleEndDildo": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StraponPanties": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 50,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnSmooth": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnStuds": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     }
   },
@@ -111,51 +132,61 @@
     "Penis": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "DoubleEndDildo": {
       "PenetrateSlow": {
         "Amount": 40,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 100,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StraponPanties": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnSmooth": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     },
     "StrapOnStuds": {
       "PenetrateSlow": {
         "Amount": 30,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       },
       "PenetrateFast": {
         "Amount": 60,
-        "Duration": 12000
+        "Duration": 12000,
+        "FunScript": false
       }
     }
   }

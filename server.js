@@ -69,8 +69,6 @@ let clients = [];
 // Serve frontend files
 app.use(express.static(path.join(process.cwd(), "public")));
 let file = path.join(process.cwd(), "public");
-console.log(file);
-
 // WebSocket connection
 wss.on("connection", (ws) => {
   clients.push(ws);
@@ -108,7 +106,6 @@ wss.on("connection", (ws) => {
           const json = data.json;
           const filePath = path.join(process.cwd(), "settings", file);
           const jsonString = JSON.stringify(json, null, 2);
-          console.log(jsonString);
           fileQueueWorker.push(
             { operation: "write", filePath: filePath, data: jsonString },
             (err) => {
@@ -133,7 +130,6 @@ wss.on("connection", (ws) => {
         }
         break;
       case "write-json-pi":
-        console.log(data);
         readAndUpdatePIJsonFile(data.json);
         break;
       case "test-pi":
@@ -183,7 +179,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge Started +`);
+  console.log(`+ BC-Bridge v0.2.0 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -506,7 +502,7 @@ async function initSettings(justSync = false) {
     ItemVulva = { ItemVulva: ItemVulva };
     ItemVulvaPiercings = { ItemVulvaPiercings: ItemVulvaPiercings };
     activityOnOtherEvent = { activityOnOtherEvent: activityOnOtherEvent };
-    console.log(ItemBoots);
+
     Merged = Object.assign(
       {},
       ItemArms,
@@ -525,7 +521,6 @@ async function initSettings(justSync = false) {
     );
     if (justSync === false) {
       if (bpioswitch === "off") {
-        console.log("off");
         connectWebSocketBPIO();
       }
     }
@@ -540,9 +535,12 @@ function handleActivityEvent(data) {
   if (Toyid !== undefined && Toyid !== "none") {
     const item = data.assetName;
     const action = data.actionName;
+    let filename;
+    let dirname = data.assetGroupName;
     let localData;
     localData = Merged[bodypart];
     if (item === "none") {
+      filename = action;
       let AmountAndDuration;
       AmountAndDuration = localData[action];
       if (AmountAndDuration == undefined) {
@@ -550,8 +548,9 @@ function handleActivityEvent(data) {
         Merged[bodypart][action] = AmountAndDuration;
         updateJsonFile(bodypart, data, AmountAndDuration);
       }
-      sendPreQ(Toyid, AmountAndDuration);
+      sendPreQ(Toyid, AmountAndDuration, dirname, filename);
     } else {
+      filename = action + item;
       let missingdata = false;
       if (!localData[action]) {
         missingdata = true;
@@ -562,16 +561,14 @@ function handleActivityEvent(data) {
         localData[action][item] = {};
       }
       if (missingdata === true) {
-        console.log("Missing data for action");
         AmountAndDuration = localData.Default;
         Merged[bodypart][action][item] = AmountAndDuration;
-        sendPreQ(Toyid, AmountAndDuration);
+        sendPreQ(Toyid, AmountAndDuration, dirname, filename);
         updateJsonFile(bodypart, data, AmountAndDuration);
       } else {
-        console.log("This is Fine");
         let ActionName = localData[action];
         let AmountAndDuration = ActionName[item];
-        sendPreQ(Toyid, AmountAndDuration);
+        sendPreQ(Toyid, AmountAndDuration, dirname, filename);
       }
     }
   }
@@ -582,12 +579,14 @@ function handleActivityEvent(data) {
 function handleActivityOnOtherEvent(data) {
   const Toyid = activeparts.activityOnOther; //Check active toy for location
   if (Toyid !== undefined && Toyid !== "none") {
+    let filename;
     const item = data.assetName;
     const action = data.actionName;
     let localData = Merged.activityOnOtherEvent;
     if (item === "none") {
       //this is where head pats and cuddles are
     } else if (validAssetNameOnOther.includes(item)) {
+      filename = action + item;
       // Items match the JSON data
       // Target Location (assetGroupName) >> assetName >> actionName
       let Default = localData.Default;
@@ -612,7 +611,6 @@ function handleActivityOnOtherEvent(data) {
         let AmountAndDuration = localData.Default;
         Object.assign(Merged.activityOnOtherEvent, localData);
         updateJsonFile("activityOnOther", data, AmountAndDuration);
-        sendPreQ(Toyid, AmountAndDuration);
       } else {
         let AmountAndDuration =
           localData[data.assetGroupName][item][data.actionName];
@@ -623,7 +621,12 @@ function handleActivityOnOtherEvent(data) {
           ] = AmountAndDuration;
           updateJsonFile("activityOnOther", data, AmountAndDuration);
         }
-        sendPreQ(Toyid, AmountAndDuration);
+        sendPreQ(
+          Toyid,
+          AmountAndDuration,
+          "activityOnOtherEvent/" + data.assetGroupName,
+          filename
+        );
       }
     }
   }
@@ -644,7 +647,6 @@ function handleToyEvent(data) {
   const Toyid = activeparts[bodypart];
   let localData;
   localData = Merged[bodypart];
-
   if (Toyid !== undefined && Toyid !== "none") {
     if (data.level === 0) {
       sendPreQToyMin(Toyid, 0);
@@ -676,7 +678,12 @@ function sendPreQToyMin(id, minValue) {
 }
 
 // Error handling before sending to Queue
-function sendPreQ(id, AmountAndDuration) {
+function sendPreQ(id, AmountAndDuration, dir, path) {
+  console.log("------ pre Q ------");
+  console.log(AmountAndDuration);
+  console.log(dir);
+  console.log(path);
+  console.log("------ pre Q ------");
   let key = "slot" + id;
   if (slots[key] === undefined) {
     slots[key] = 0;
@@ -685,11 +692,23 @@ function sendPreQ(id, AmountAndDuration) {
   if (slotsmin[key2] === undefined) {
     slotsmin[key2] = 0;
   }
-  Queue_Vibr.push({
-    Deviceid: id,
-    intensity: AmountAndDuration.Amount,
-    timeout: AmountAndDuration.Duration,
-  });
+
+  if (AmountAndDuration.FunScript === true) {
+    Queue_Vibr.push({
+      Deviceid: id,
+      intensity: AmountAndDuration.Amount,
+      timeout: AmountAndDuration.Duration,
+      funscript: true,
+      funscriptdir: dir,
+      funscriptpath: path,
+    });
+  } else {
+    Queue_Vibr.push({
+      Deviceid: id,
+      intensity: AmountAndDuration.Amount,
+      timeout: AmountAndDuration.Duration,
+    });
+  }
 }
 
 // Adds missing events or new items to the orginal files to keep things updated
@@ -931,34 +950,73 @@ function generateVibrateCmdMessage(deviceId, temp1) {
 }
 
 // The Queue that holds actions allows actions to stack and de-stack
-let Queue_Vibr = async.queue(function (task, callback) {
-  console.log(
-    `Performing task: ${task.Deviceid} intensity: ${task.intensity} Delay: ${task.timeout}`
-  );
-  console.log("----------------------------------");
+let Queue_Vibr = async.queue(async function (task) {
+  if (task.funscript === true) {
+    console.log(
+      `Performing Fun Script: ${task.Deviceid} Dir: ${task.funscriptdir} Funscript: ${task.funscriptpath}`
+    );
+    const filePath = path.join(
+      process.cwd(),
+      "funscripts/" + task.funscriptdir,
+      task.funscriptpath + ".funscript"
+    );
+    console.log(filePath);
+    const funscriptData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const actions = funscriptData.actions;
+    // Run the Funscript
+    console.log("Running Funscript...");
+    let lastActionTime = 0;
+    for (const action of actions) {
+      const currentTime = action.at;
+      const position = action.pos;
 
-  let currentValue = slots["slot" + task.Deviceid];
-  let newValue = currentValue + task.intensity;
-  let minValue = slotsmin["slotmin" + task.Deviceid];
+      // Calculate sleep duration based on the timestamp difference
+      const sleepDuration = currentTime - lastActionTime;
 
-  if (currentValue < 0) {
-    slots["slot" + task.Deviceid] = 0;
-  }
-  if (minValue < 0) {
-    slotsmin["slotmin" + task.Deviceid] = 0;
-  }
-  slots["slot" + task.Deviceid] = newValue;
+      // Wait for the sleep duration
+      await new Promise((resolve) => setTimeout(resolve, sleepDuration));
 
-  let temp1 = minValue + newValue;
-  temp1 = Math.min(temp1, 100);
+      // Move all connected devices to the target position
+      let currentValue = slots["slot" + task.Deviceid];
+      let newValue = currentValue + position;
+      let minValue = slotsmin["slotmin" + task.Deviceid];
 
-  const message = generateVibrateCmdMessage(task.Deviceid, temp1);
-  ws2SendRequest(message);
+      if (currentValue < 0) {
+        slots["slot" + task.Deviceid] = 0;
+      }
+      if (minValue < 0) {
+        slotsmin["slotmin" + task.Deviceid] = 0;
+      }
 
-  setTimeout(function () {
+      let temp1 = minValue + newValue;
+      temp1 = Math.min(temp1, 100);
+
+      const message = generateVibrateCmdMessage(task.Deviceid, temp1);
+      ws2SendRequest(message);
+
+      console.log(position);
+      console.log(action.at);
+
+      lastActionTime = currentTime;
+    }
+
+    console.log("Finished running Funscript.");
+  } else {
+    console.log(
+      `Performing task: ${task.Deviceid} intensity: ${task.intensity} Delay: ${task.timeout}`
+    );
+    console.log("----------------------------------");
+
     let currentValue = slots["slot" + task.Deviceid];
+    let newValue = currentValue + task.intensity;
     let minValue = slotsmin["slotmin" + task.Deviceid];
-    let newValue = currentValue - task.intensity;
+
+    if (currentValue < 0) {
+      slots["slot" + task.Deviceid] = 0;
+    }
+    if (minValue < 0) {
+      slotsmin["slotmin" + task.Deviceid] = 0;
+    }
     slots["slot" + task.Deviceid] = newValue;
 
     let temp1 = minValue + newValue;
@@ -967,8 +1025,23 @@ let Queue_Vibr = async.queue(function (task, callback) {
     const message = generateVibrateCmdMessage(task.Deviceid, temp1);
     ws2SendRequest(message);
 
-    callback();
-  }, task.timeout + 500);
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        let currentValue = slots["slot" + task.Deviceid];
+        let minValue = slotsmin["slotmin" + task.Deviceid];
+        let newValue = currentValue - task.intensity;
+        slots["slot" + task.Deviceid] = newValue;
+
+        let temp1 = minValue + newValue;
+        temp1 = Math.min(temp1, 100);
+
+        const message = generateVibrateCmdMessage(task.Deviceid, temp1);
+        ws2SendRequest(message);
+
+        resolve();
+      }, task.timeout + 500);
+    });
+  }
 }, 150);
 
 // All Pi Shock Functions
@@ -1002,7 +1075,7 @@ async function initPiShock() {
         Object.assign(PiSettings, mergedData);
       }
     }
-    console.log(PiSettings); // for debugging purposes
+    //console.log(PiSettings); // for debugging purposes
   }
 }
 
@@ -1220,7 +1293,6 @@ let fileQueueWorker = async.queue(function (task, callback) {
         callback(err);
         return;
       }
-      console.log(data);
       console.log("File written:", filePath);
       callback(null);
     });

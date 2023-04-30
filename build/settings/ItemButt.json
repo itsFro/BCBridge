@@ -7,369 +7,455 @@
   },
   "Default": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+    "FunScript": false
   },
   "Kiss": {
     "Amount": 20,
-    "Duration": 1500
+    "Duration": 1500,
+    "FunScript": false
   },
   "Bite": {
     "Amount": 30,
-    "Duration": 1500
+    "Duration": 1500,
+    "FunScript": false
   },
   "Caress": {
     "Amount": 18,
-    "Duration": 8000
+    "Duration": 8000,
+    "FunScript": false
   },
   "Grope": {
     "Amount": 28,
-    "Duration": 8000
+    "Duration": 8000,
+    "FunScript": false
   },
   "Spank": {
     "Amount": 60,
-    "Duration": 1500
+    "Duration": 1500,
+    "FunScript": false
   },
   "MasturbateTongue": {
     "Amount": 30,
-    "Duration": 8000
+    "Duration": 8000,
+    "FunScript": false
   },
   "MasturbateHand": {
     "Amount": 30,
-    "Duration": 15000
+    "Duration": 15000,
+    "FunScript": true
   },
   "MasturbateFist": {
     "Amount": 50,
-    "Duration": 10000
+    "Duration": 10000,
+    "FunScript": false
   },
   "MasturbateFoot": {
     "Amount": 40,
-    "Duration": 15000
+    "Duration": 15000,
+    "FunScript": false
   },
   "TriggerShock0": {
     "Amount": 70,
-    "Duration": 1000
+    "Duration": 1000,
+    "FunScript": false
   },
   "TriggerShock1": {
     "Amount": 80,
-    "Duration": 1200
+    "Duration": 1200,
+    "FunScript": false
   },
   "TriggerShock2": {
     "Amount": 100,
-    "Duration": 1400
+    "Duration": 1400,
+    "FunScript": false
   },
   "Wiggle": {
     "Amount": 10,
-    "Duration": 3000
+    "Duration": 3000,
+    "FunScript": false
   },
   "ShockItem": {
     "ShockWand": {
       "Amount": 90,
-      "Duration": 2000
+      "Duration": 2000,
+      "FunScript": false
     },
     "CattleProd": {
       "Amount": 100,
-      "Duration": 2000
+      "Duration": 2000,
+      "FunScript": false
     }
   },
   "SpankItem": {
     "Baguette": {
       "Amount": 20,
-      "Duration": 1000
+      "Duration": 1000,
+      "FunScript": false
     },
     "Belt": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Broom": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Cane": {
       "Amount": 90,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Crop": {
       "Amount": 90,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Flogger": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Gavel": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Hairbrush": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "HeartCrop": {
       "Amount": 90,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Paddle": {
       "Amount": 90,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "PetToy": {
       "Amount": 70,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "RainbowWand": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Ruler": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Spatula": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "TennisRacket": {
       "Amount": 80,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "Whip": {
       "Amount": 100,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     },
     "WhipPaddle": {
       "Amount": 90,
-      "Duration": 1500
+      "Duration": 1500,
+      "FunScript": false
     }
   },
-  "PourItem": {},
   "TickleItem": {
     "ElectricToothbrush": {
       "Amount": 20,
-      "Duration": 6000
+      "Duration": 6000,
+      "FunScript": false
     },
     "Feather": {
       "Amount": 25,
-      "Duration": 6000
+      "Duration": 6000,
+      "FunScript": false
     },
     "FeatherDuster": {
       "Amount": 30,
-      "Duration": 7000
+      "Duration": 7000,
+      "FunScript": false
     },
     "LongDuster": {
       "Amount": 30,
-      "Duration": 7000
+      "Duration": 7000,
+      "FunScript": false
     },
     "PetToy": {
       "Amount": 30,
-      "Duration": 6000
+      "Duration": 6000,
+      "FunScript": false
     },
     "Toothbrush": {
       "Amount": 20,
-      "Duration": 6000
+      "Duration": 6000,
+      "FunScript": false
     }
   },
   "MasturbateItem": {
     "VibratingWand": {
       "Amount": 80,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     },
     "ElectricToothbrush": {
       "Amount": 30,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     },
     "LargeDildo": {
       "Amount": 40,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     },
     "SmallDildo": {
       "Amount": 30,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     },
     "SmallVibratingWand": {
       "Amount": 60,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     },
     "Vibrator": {
       "Amount": 35,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": false
     }
   },
   "RubItem": {
     "Ballgag": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Cane": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "TapeRoll": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Crop": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "GlassFilled": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Sword": {
       "Amount": 15,
-      "Duration": 4000
+      "Duration": 4000,
+      "FunScript": false
     },
     "HeartCrop": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "IceCube": {
       "Amount": 25,
-      "Duration": 4000
+      "Duration": 4000,
+      "FunScript": false
     },
     "LargeDildo": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "RopeCoilLong": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "LongSock": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Lotion": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Phone1": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Phone2": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Paddle": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Panties": {
       "Amount": 20,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "PotionBottle": {
       "Amount": 25,
-      "Duration": 4000
+      "Duration": 4000,
+      "FunScript": false
     },
     "ShockRemote": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "RopeCoilShort": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "SmallDildo": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "SmallVibratingWand": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Towel": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "VibratingWand": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "Vibrator": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "VibeRemote": {
       "Amount": 22,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     },
     "WhipPaddle": {
       "Amount": 25,
-      "Duration": 3000
+      "Duration": 3000,
+      "FunScript": false
     }
   },
   "Inject": {
     "MedicalInjector": {
       "Amount": 10,
-      "Duration": 20000
+      "Duration": 20000,
+      "FunScript": false
     }
   },
   "RollItem": {
     "WartenbergWheel": {
       "Amount": 30,
-      "Duration": 8000
+      "Duration": 8000,
+      "FunScript": false
     }
   },
   "PenetrateSlow": {
     "LargeDildo": {
       "Amount": 40,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "SmallDildo": {
       "Amount": 30,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "DoubleEndDildo": {
       "Amount": 32,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "Penis": {
       "Amount": 35,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StraponPanties": {
       "Amount": 35,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StrapOnSmooth": {
       "Amount": 35,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StrapOnStuds": {
       "Amount": 38,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     }
   },
   "PenetrateFast": {
     "LargeDildo": {
       "Amount": 70,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "SmallDildo": {
       "Amount": 60,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "DoubleEndDildo": {
       "Amount": 62,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "Penis": {
       "Amount": 65,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StraponPanties": {
       "Amount": 65,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StrapOnSmooth": {
       "Amount": 65,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     },
     "StrapOnStuds": {
       "Amount": 68,
-      "Duration": 10000
+      "Duration": 10000,
+      "FunScript": true
     }
   }
 }

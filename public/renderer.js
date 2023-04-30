@@ -653,7 +653,11 @@ async function save() {
           addLogEntry(tree + " is lower than 0");
         }
         if (i === keys.length - 1) {
-          current[key] = parseInt(input.value, 10);
+          if (input.type === "checkbox") {
+            current[key] = input.checked;
+          } else {
+            current[key] = parseInt(input.value, 10);
+          }
         } else {
           if (!current[key]) {
             current[key] = {};
@@ -921,50 +925,69 @@ function buildInputs(data, parentKey = "") {
       label.textContent = `${key}:`;
       label.className = "inline-block align-middle px-3 py-2 w-24 " + bgcolor;
       div.appendChild(label);
+      if (key === "FunScript") {
+        console.log("FunScript");
+        console.log(value);
+        // Create elements
+        //const div = document.createElement("div");
+        const labelSwitch = document.createElement("label");
+        const input = document.createElement("input");
+        const span = document.createElement("span");
 
-      const input = document.createElement("input");
-      input.type = "number";
-      input.id = `${parentKey}.${key}`;
-      input.value = value;
-      input.className = "bg-gray-700 rounded-l-lg px-3 py-2 custom-input";
-      input.style.width = "150px";
-      if (key === "Amount") {
-        input.min = 0;
-        input.max = 100;
-      } else if (key === "Duration") {
-        input.min = 0;
-        input.max = 30000;
+        labelSwitch.className = "switch";
+        input.type = "checkbox";
+        input.id = `${parentKey}.${key}`;
+        input.checked = value;
+        span.className = "slider round";
+        labelSwitch.appendChild(input);
+        labelSwitch.appendChild(span);
+        div.appendChild(labelSwitch);
+        container.lastChild.appendChild(div);
+      } else {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.id = `${parentKey}.${key}`;
+        input.value = value;
+        input.className = "bg-gray-700 rounded-l-lg px-3 py-2 custom-input";
+        input.style.width = "150px";
+        if (key === "Amount") {
+          input.min = 0;
+          input.max = 100;
+        } else if (key === "Duration") {
+          input.min = 0;
+          input.max = 30000;
+        }
+        div.appendChild(input);
+
+        // Add the buttons container div
+        const buttonsContainer = document.createElement("div");
+        buttonsContainer.className = "flex flex-col";
+
+        // Add the increment button
+        const incrementButton = document.createElement("button");
+        incrementButton.textContent = "+";
+        incrementButton.className =
+          "bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-tr-lg focus:outline-none";
+        incrementButton.onmousedown = () => startIncrement(input);
+        incrementButton.onmouseup = stopIncrement;
+        incrementButton.onmouseleave = stopIncrement;
+        buttonsContainer.appendChild(incrementButton);
+
+        // Add the decrement button
+        const decrementButton = document.createElement("button");
+        decrementButton.textContent = "-";
+        decrementButton.className =
+          "bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-br-lg focus:outline-none";
+        decrementButton.onmousedown = () => startDecrement(input);
+        decrementButton.onmouseup = stopDecrement;
+        decrementButton.onmouseleave = stopDecrement;
+        buttonsContainer.appendChild(decrementButton);
+
+        // Append the buttons container to the div
+        div.appendChild(buttonsContainer);
+
+        container.lastChild.appendChild(div);
       }
-      div.appendChild(input);
-
-      // Add the buttons container div
-      const buttonsContainer = document.createElement("div");
-      buttonsContainer.className = "flex flex-col";
-
-      // Add the increment button
-      const incrementButton = document.createElement("button");
-      incrementButton.textContent = "+";
-      incrementButton.className =
-        "bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-tr-lg focus:outline-none";
-      incrementButton.onmousedown = () => startIncrement(input);
-      incrementButton.onmouseup = stopIncrement;
-      incrementButton.onmouseleave = stopIncrement;
-      buttonsContainer.appendChild(incrementButton);
-
-      // Add the decrement button
-      const decrementButton = document.createElement("button");
-      decrementButton.textContent = "-";
-      decrementButton.className =
-        "bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-br-lg focus:outline-none";
-      decrementButton.onmousedown = () => startDecrement(input);
-      decrementButton.onmouseup = stopDecrement;
-      decrementButton.onmouseleave = stopDecrement;
-      buttonsContainer.appendChild(decrementButton);
-
-      // Append the buttons container to the div
-      div.appendChild(buttonsContainer);
-
-      container.lastChild.appendChild(div);
     }
   }
 }
