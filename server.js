@@ -179,7 +179,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.2.0 Started +`);
+  console.log(`+ BC-Bridge v0.3.0 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -342,24 +342,28 @@ function startWebSocketServer() {
             "ItemHands",
           ];
 
-          if (
-            data.action == "activityEvent" &&
-            !InvalidAssetGroupNames.includes(data.assetGroupName)
-          ) {
-            //handle activity event
-            handleActivityEvent(data);
-          } else if (data.action == "activityOnOtherEvent") {
-            handleActivityOnOtherEvent(data);
-          } else if (
-            (data.action === "itemRemoved" || data.action === "itemSwapped") &&
-            !InvalidAssetGroupNames.includes(data.assetGroupName)
-          ) {
-            handleToyRemoveEvent(data);
-          } else if (
-            data.action === "toyEvent" &&
-            !InvalidAssetGroupNames.includes(data.assetGroupName)
-          ) {
-            handleToyEvent(data);
+          if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
+            switch (data.action) {
+              case "activityEvent":
+                handleActivityEvent(data);
+                break;
+              case "activityOnOtherEvent":
+                handleActivityOnOtherEvent(data);
+                break;
+              case "itemRemoved":
+                handleToyRemoveEvent(data);
+                break;
+              case "itemSwapped":
+                handleToyRemoveEvent(data);
+                handleToyAddEvent(data);
+                break;
+              case "itemAdded":
+                handleToyAddEvent(data);
+                break;
+              case "toyEvent":
+                handleToyEvent(data);
+                break;
+            }
           }
         }
         if (MainSettingsPi.PiShock.Enabled) {
@@ -452,6 +456,265 @@ function saveJSONToFile(jsonData, fileName) {
   );
 }
 
+function handleToyAddEvent(data) {
+  const bodypart = data.assetGroupName;
+  const Toyid = activeparts[bodypart];
+  if (Toyid !== undefined && Toyid !== "none") {
+    const item = data.assetName;
+    let filename;
+    let dirname = data.assetGroupName;
+    let localData;
+    localData = Merged[bodypart].ItemAdded;
+    filename = "ItemAdded" + item;
+    if (localData === undefined) {
+      Merged[bodypart].ItemAdded = {};
+      localData = Merged[bodypart].ItemAdded;
+    }
+    if (!localData[item]) {
+      localData[item] = {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      };
+      sendPreQ(Toyid, localData[item], dirname, filename);
+      updateJsonFile_ItemAdded(bodypart, data);
+    } else {
+      sendPreQ(Toyid, localData[item], dirname, filename);
+    }
+  }
+}
+
+async function updateJsonFile_ItemAdded(BodyPart, data) {
+  sendMessageToRenderer(
+    "toast",
+    "Missing Data ItemAdded for " + JSON.stringify(data),
+    "#7B0000"
+  );
+
+  if (BodyPart === "ItemButt") {
+    ItemButt = await readJsonFile("ItemButt.json");
+    const item = data.assetName;
+
+    if (!ItemButt.ItemAdded) {
+      ItemButt.ItemAdded = {};
+    }
+
+    ItemButt.ItemAdded = {
+      ...ItemButt.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemButt, "ItemButt.json");
+  }
+  if (BodyPart === "ItemArms") {
+    ItemArms = await readJsonFile("ItemArms.json");
+    const item = data.assetName;
+    if (!ItemArms.ItemAdded) {
+      ItemArms.ItemAdded = {};
+    }
+
+    ItemArms.ItemAdded = {
+      ...ItemArms.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemArms, "ItemArms.json");
+  }
+  if (BodyPart === "ItemBoots") {
+    ItemBoots = await readJsonFile("ItemBoots.json");
+    const item = data.assetName;
+    if (!ItemBoots.ItemAdded) {
+      ItemBoots.ItemAdded = {};
+    }
+
+    ItemBoots.ItemAdded = {
+      ...ItemBoots.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemBoots, "ItemBoots.json");
+  }
+  if (BodyPart === "ItemBreast") {
+    ItemBreast = await readJsonFile("ItemBreast.json");
+    const item = data.assetName;
+    if (!ItemBreast.ItemAdded) {
+      ItemBreast.ItemAdded = {};
+    }
+
+    ItemBreast.ItemAdded = {
+      ...ItemBreast.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemBreast, "ItemBreast.json");
+  }
+  if (BodyPart === "ItemDevices") {
+    ItemDevices = await readJsonFile("ItemDevices.json");
+    const item = data.assetName;
+    if (!ItemDevices.ItemAdded) {
+      ItemDevices.ItemAdded = {};
+    }
+
+    ItemDevices.ItemAdded = {
+      ...ItemDevices.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemDevices, "ItemDevices.json");
+  }
+  if (BodyPart === "ItemFeet") {
+    ItemFeet = await readJsonFile("ItemFeet.json");
+    const item = data.assetName;
+    if (!ItemFeet.ItemAdded) {
+      ItemFeet.ItemAdded = {};
+    }
+
+    ItemFeet.ItemAdded = {
+      ...ItemFeet.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemFeet, "ItemFeet.json");
+  }
+  if (BodyPart === "ItemLegs") {
+    ItemLegs = await readJsonFile("ItemLegs.json");
+    const item = data.assetName;
+    if (!ItemLegs.ItemAdded) {
+      ItemLegs.ItemAdded = {};
+    }
+
+    ItemLegs.ItemAdded = {
+      ...ItemLegs.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemLegs, "ItemLegs.json");
+  }
+  if (BodyPart === "ItemNeck") {
+    ItemNeck = await readJsonFile("ItemNeck.json");
+    const item = data.assetName;
+    if (!ItemNeck.ItemAdded) {
+      ItemNeck.ItemAdded = {};
+    }
+
+    ItemNeck.ItemAdded = {
+      ...ItemNeck.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemNeck, "ItemNeck.json");
+  }
+  if (BodyPart === "ItemNipples") {
+    ItemNipples = await readJsonFile("ItemNipples.json");
+    const item = data.assetName;
+    if (!ItemNipples.ItemAdded) {
+      ItemNipples.ItemAdded = {};
+    }
+
+    ItemNipples.ItemAdded = {
+      ...ItemNipples.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemNipples, "ItemNipples.json");
+  }
+  if (BodyPart === "ItemPelvis") {
+    ItemPelvis = await readJsonFile("ItemPelvis.json");
+    const item = data.assetName;
+    if (!ItemPelvis.ItemAdded) {
+      ItemPelvis.ItemAdded = {};
+    }
+
+    ItemPelvis.ItemAdded = {
+      ...ItemPelvis.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemPelvis, "ItemPelvis.json");
+  }
+  if (BodyPart === "ItemVulva") {
+    ItemVulva = await readJsonFile("ItemVulva.json");
+    const item = data.assetName;
+    if (!ItemVulva.ItemAdded) {
+      ItemVulva.ItemAdded = {};
+    }
+
+    ItemVulva.ItemAdded = {
+      ...ItemVulva.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemVulva, "ItemVulva.json");
+  }
+  if (BodyPart === "ItemVulvaPiercings") {
+    ItemVulvaPiercings = await readJsonFile("ItemVulvaPiercings.json");
+    const item = data.assetName;
+    if (!ItemVulvaPiercings.ItemAdded) {
+      ItemVulvaPiercings.ItemAdded = {};
+    }
+
+    ItemVulvaPiercings.ItemAdded = {
+      ...ItemVulvaPiercings.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemVulvaPiercings, "ItemVulvaPiercings.json");
+  }
+  if (BodyPart === "ItemNipplesPiercings") {
+    ItemNipplesPiercings = await readJsonFile("ItemNipplesPiercings.json");
+    const item = data.assetName;
+    if (!ItemNipplesPiercings.ItemAdded) {
+      ItemNipplesPiercings.ItemAdded = {};
+    }
+
+    ItemNipplesPiercings.ItemAdded = {
+      ...ItemNipplesPiercings.ItemAdded,
+      [item]: {
+        Amount: 0,
+        Duration: 1000,
+        FunScript: false,
+      },
+    };
+    saveJSONToFile(ItemNipplesPiercings, "ItemNipplesPiercings.json");
+  }
+}
+
 // Load All Json and store in Global variables
 async function initSettings(justSync = false) {
   const jsonDataParsed = await readJsonFile("activityOnOtherInclude.json");
@@ -489,6 +752,7 @@ async function initSettings(justSync = false) {
     ItemVulva = await readJsonFile("ItemVulva.json");
     ItemVulvaPiercings = await readJsonFile("ItemVulvaPiercings.json");
     activityOnOtherEvent = await readJsonFile("activityOnOtherEvent.json");
+    ItemNipplesPiercings = await readJsonFile("ItemNipplesPiercings.json");
     ItemArms = { ItemArms: ItemArms };
     ItemButt = { ItemButt: ItemButt };
     ItemBoots = { ItemBoots: ItemBoots };
@@ -502,7 +766,7 @@ async function initSettings(justSync = false) {
     ItemVulva = { ItemVulva: ItemVulva };
     ItemVulvaPiercings = { ItemVulvaPiercings: ItemVulvaPiercings };
     activityOnOtherEvent = { activityOnOtherEvent: activityOnOtherEvent };
-
+    ItemNipplesPiercings = { ItemNipplesPiercings: ItemNipplesPiercings };
     Merged = Object.assign(
       {},
       ItemArms,
@@ -517,7 +781,8 @@ async function initSettings(justSync = false) {
       ItemPelvis,
       ItemVulva,
       ItemVulvaPiercings,
-      activityOnOtherEvent
+      activityOnOtherEvent,
+      ItemNipplesPiercings
     );
     if (justSync === false) {
       if (bpioswitch === "off") {
@@ -938,6 +1203,22 @@ async function updateJsonFile(BodyPart, data, Default) {
       }
     }
     saveJSONToFile(ItemVulvaPiercings, "ItemVulvaPiercings.json");
+  }
+  if (BodyPart === "ItemNipplesPiercings") {
+    ItemNipplesPiercings = await readJsonFile("ItemNipplesPiercings.json");
+    const item = data.assetName;
+    const action = data.actionName;
+    if (item === "none") {
+      ItemNipplesPiercings[action] = Default;
+    } else {
+      if (!ItemNipplesPiercings[action]) {
+        ItemNipplesPiercings[action] = {};
+      }
+      if (!ItemNipplesPiercings[action][item]) {
+        ItemNipplesPiercings[action][item] = Default;
+      }
+    }
+    saveJSONToFile(ItemNipplesPiercings, "ItemNipplesPiercings.json");
   }
 }
 

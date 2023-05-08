@@ -1,0 +1,75 @@
+{
+  "Toys": {
+    "low": 25,
+    "medium": 50,
+    "high": 75,
+    "max": 100
+  },
+  "Default": {
+    "Amount": 10,
+    "Duration": 3000,
+    "FunScript": false
+  },
+  "ItemAdded": {
+    "BarbellPiercing": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NippleChastityPiercing2": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NippleChastityPiercing1": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "CrossedStraightPiercing": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NecklacePiercingChain": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "BellPiercing": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NippleAccessory3": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NippleAccessory2": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "NippleAccessory1": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "RoundPiercing": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "StraightPiercing": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "VibeHeartPiercings": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    }
+  }
+}

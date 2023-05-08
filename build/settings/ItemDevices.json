@@ -5,7 +5,36 @@
     "high": 75,
     "max": 100
   },
-"Default":{"Amount":10,
-"Duration":3000,
-"FunScript": false}
+  "Default": {
+    "Amount": 10,
+    "Duration": 3000,
+    "FunScript": false
+  },
+  "ItemAdded": {
+    "FuckMachine": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "SaddleStand": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "OneBarPrison": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "Sybian": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "WoodenHorse": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    }
+  }
 }

@@ -1,55 +1,61 @@
 {
-  "Toys": {
-    "low": 25,
-    "medium": 50,
-    "high": 75,
-    "max": 100
-  },
   "Default": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
+  },
+  "ItemAdded": {
+    "SpreaderDildoBar": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    },
+    "SpreaderVibratingDildoBar": {
+      "Amount": 0,
+      "Duration": 1000,
+      "FunScript": false
+    }
   },
   "Bite": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Caress": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "MassageHands": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Tickle": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Spank": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Wiggle": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "ShockItem": {
     "CattleProd": {
       "Amount": 10,
       "Duration": 3000,
-"FunScript": false
+      "FunScript": false
     },
     "ShockWand": {
       "Amount": 10,
       "Duration": 3000,
-"FunScript": false
+      "FunScript": false
     }
   }
 }

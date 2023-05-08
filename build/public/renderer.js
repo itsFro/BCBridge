@@ -372,6 +372,20 @@ async function init() {
     }
     setTabsColorIntiface("ItemArms-button");
   });
+
+  document
+    .getElementById("ItemNipplesPiercings-button")
+    .addEventListener("click", () => {
+      if (currentJsonPage == 1) {
+        loadJson("ItemNipplesPiercings.json");
+        updateFloatTitle("Actions");
+        updateFloatSubTitle("ItemNipplesPiercings");
+      } else if (currentJsonPage == 2) {
+        loadJson("s_ItemNipplesPiercings.json");
+      }
+      setTabsColorIntiface("ItemNipplesPiercings-button");
+    });
+
   document
     .getElementById("ItemNipples-button")
     .addEventListener("click", () => {
@@ -582,6 +596,7 @@ function populateDropdowns(deviceList) {
   const dropdownIds = [
     "ItemNeck",
     "ItemArms",
+    "ItemNipplesPiercings",
     "ItemNipples",
     "ItemBreast",
     "ItemVulva",
@@ -690,7 +705,6 @@ async function save() {
       let HomePagePi = {
         [pipage]: deviceEnableCheckbox.checked,
       };
-      //console.log(HomePagePi);
       socket.send(
         JSON.stringify({
           type: "write-json-pi",
@@ -797,7 +811,6 @@ async function nextResult() {
 }
 
 function backToTop() {
-  console.log("Back to top");
   const contentDiv = document.getElementById("main-content");
   contentDiv.scrollTo({
     top: 0,
@@ -884,9 +897,8 @@ function updateTitle(override = "") {
       .replace("", "");
   }
 }
-
-function buildInputs(data, parentKey = "") {
-  const container = document.getElementById("json-data");
+function buildInputs(data, parentKey = "", parentContainer, level = 0) {
+  const container = parentContainer || document.getElementById("json-data");
 
   for (const key in data) {
     const value = data[key];
@@ -904,20 +916,55 @@ function buildInputs(data, parentKey = "") {
           bgcolor = "bg-gray-900";
         }
       }
+      const childContainer2 = document.createElement("div");
+      childContainer2.className = "flex w-full " + bgcolor;
       const header =
         parentKey === ""
           ? document.createElement("h3")
           : document.createElement("h4");
+
+      const arrow = document.createElement("span");
       header.textContent = key;
       header.className =
         parentKey === ""
-          ? "text-xl font-bold pb-4 pl-2 pt-2 " + bgcolor
-          : "text-lg font-bold pb-4 pl-4 " + bgcolor;
-      container.appendChild(header);
+          ? "text-xl font-bold pb-4 pl-2 pt-2 w-full " + bgcolor
+          : "text-lg font-bold pb-4 pl-4 w-full " + bgcolor;
+      if (parentKey === "") {
+        header.classList.add("cursor-pointer");
+        arrow.classList.add("arrow");
+        header.insertAdjacentElement("afterbegin", arrow); // Insert the arrow before the text content
+      }
+
+      childContainer2.appendChild(header);
+      container.appendChild(childContainer2);
+      let childContentContainer;
+      if (level === 0) {
+        childContentContainer = document.createElement("div");
+        childContentContainer.classList.add("hidden");
+        childContentContainer.className = "input-group " + bgcolor;
+
+        header.addEventListener("click", () => {
+          childContentContainer.classList.toggle("hidden");
+          arrow.classList.toggle("arrow-down");
+        });
+        container.appendChild(childContentContainer);
+      }
+
       const childContainer = document.createElement("div");
       childContainer.className = "flex flex-wrap " + bgcolor;
-      container.appendChild(childContainer);
-      buildInputs(value, parentKey ? `${parentKey}.${key}` : key);
+
+      if (level === 0) {
+        childContentContainer.appendChild(childContainer);
+      } else {
+        container.appendChild(childContainer);
+      }
+
+      buildInputs(
+        value,
+        parentKey ? `${parentKey}.${key}` : key,
+        childContainer,
+        level + 1
+      );
     } else {
       const div = document.createElement("div");
       div.className = "input-group flex mb-4 grid-4 pl-4 pr-2" + bgcolor;
@@ -926,8 +973,6 @@ function buildInputs(data, parentKey = "") {
       label.className = "inline-block align-middle px-3 py-2 w-24 " + bgcolor;
       div.appendChild(label);
       if (key === "FunScript") {
-        console.log("FunScript");
-        console.log(value);
         // Create elements
         //const div = document.createElement("div");
         const labelSwitch = document.createElement("label");
@@ -942,7 +987,11 @@ function buildInputs(data, parentKey = "") {
         labelSwitch.appendChild(input);
         labelSwitch.appendChild(span);
         div.appendChild(labelSwitch);
-        container.lastChild.appendChild(div);
+        if (level === 0) {
+          container.lastChild.appendChild(div);
+        } else {
+          container.appendChild(div);
+        }
       } else {
         const input = document.createElement("input");
         input.type = "number";
@@ -986,7 +1035,11 @@ function buildInputs(data, parentKey = "") {
         // Append the buttons container to the div
         div.appendChild(buttonsContainer);
 
-        container.lastChild.appendChild(div);
+        if (level === 0) {
+          container.lastChild.appendChild(div);
+        } else {
+          container.appendChild(div);
+        }
       }
     }
   }
