@@ -47,6 +47,14 @@ socket.addEventListener("message", (event) => {
       document.getElementById("PlugConnectStatus").className =
         "w-6 h-6 bg-red-700 rounded-full";
       document.getElementById("PlugConnectStatus_p").innerText = "Offline";
+    } else if (data.message === "online-xtoys") {
+      document.getElementById("xToyConnectStatus").className =
+        "w-6 h-6 bg-green-700 rounded-full";
+      document.getElementById("xToyConnectStatus_p").innerText = "Online";
+    } else if (data.message === "offline-xtoys") {
+      document.getElementById("xToyConnectStatus").className =
+        "w-6 h-6 bg-red-700 rounded-full";
+      document.getElementById("xToyConnectStatus_p").innerText = "Offline";
     }
   }
 
@@ -270,8 +278,7 @@ async function init() {
     showJsonPage();
     preheaderJson.innerHTML =
       '<img src="./imgs/actions.svg" height="20" width="20"></img>';
-    headerJson.innerHTML =
-      '<h2 class="text-2xl font-bold mb-4">Actions Intiface</h2>';
+    headerJson.innerHTML = '<h2 class="text-2xl font-bold mb-4">Actions</h2>';
     loadJson("ItemNeck.json");
     setTabsColorIntiface("ItemNeck-button");
     document.getElementById("sub-nav").style = "";
@@ -558,7 +565,15 @@ async function init() {
     .getElementById("PlugDisconnect")
     .addEventListener("click", () => msgToMain("bpio", "bp-io-stop"));
 
-  document.getElementById("PlugSync").addEventListener("click", SyncToys);
+  // document.getElementById("PlugSync").addEventListener("click", SyncToys);
+
+  document
+    .getElementById("xToyConnect")
+    .addEventListener("click", () => msgToMain("xtoy", "xtoy-start"));
+
+  document
+    .getElementById("xToyDisconnect")
+    .addEventListener("click", () => msgToMain("xtoy", "xtoy-stop"));
 
   document
     .getElementById("updateserver")
@@ -1005,6 +1020,18 @@ function buildInputs(data, parentKey = "", parentContainer, level = 0) {
         } else if (key === "Duration") {
           input.min = 0;
           input.max = 30000;
+        } else if (key === "low") {
+          input.min = 0;
+          input.max = 100;
+        } else if (key === "medium") {
+          input.min = 0;
+          input.max = 100;
+        } else if (key === "high") {
+          input.min = 0;
+          input.max = 100;
+        } else if (key === "max") {
+          input.min = 0;
+          input.max = 100;
         }
         div.appendChild(input);
 

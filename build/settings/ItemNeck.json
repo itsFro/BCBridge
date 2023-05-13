@@ -1,80 +1,85 @@
 {
+  "Toys": {
+    "low": 25,
+    "medium": 50,
+    "high": 75,
+    "max": 100
+  },
   "Default": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
-  },  "ItemAdded": {
+    "FunScript": false
   },
   "Nibble": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Lick": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Kiss": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Bite": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Caress": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "MassageHands": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Tickle": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Grope": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "Choke": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "TriggerShock0": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "TriggerShock1": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "TriggerShock2": {
     "Amount": 10,
     "Duration": 3000,
-"FunScript": false
+    "FunScript": false
   },
   "ShockItem": {
     "ShockWand": {
       "Amount": 10,
       "Duration": 3000,
-"FunScript": false
+      "FunScript": false
     },
     "CattleProd": {
       "Amount": 10,
       "Duration": 3000,
-"FunScript": false
+      "FunScript": false
     }
   }
 }

@@ -50,7 +50,6 @@ async function saveSettings() {
       Enabled: document.getElementById("IntifaceEnabled").checked,
     },
     xToy: {
-      APIInput: document.getElementById("xToyAPIInput").value,
       Enabled: document.getElementById("xToyEnabled").checked,
     },
     Local2B: {

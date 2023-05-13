@@ -21,6 +21,10 @@ We are not held liable for any injuries and/or harm done to users of this softwa
 including but not limited to PiShock. By using this software, you (the user) take full responsibility for any and all harm done to yourself.
 PLAY SAFE!
 
+v0.4.0 Alpha
+Full re-write to use buttplug api 
+Added xToys https://xtoys.app/layouts/-NVKfYANSoF-uI3eLkYW (if layout does not work guide will be added to discord later added to bcbridge)
+Expect bugs
 
 v0.3.0 Alpha
 Added collapsing titles to the settings

@@ -6,14 +6,48 @@ const fs = require("fs");
 const path = require("path");
 const async = require("async"); // Used for queue
 const axios = require("axios");
+const Buttplug = require("buttplug");
 
 const app = express();
 const server = http.createServer(app);
-let ws2;
-let ws;
+
 let wsss;
-let wss2;
+let xtoyssocket;
 const wss = new WebSocket.Server({ server });
+
+const xtoyValues = {
+  ItemNeck: 0,
+  ItemArms: 0,
+  ItemNipplesPiercings: 0,
+  ItemNipples: 0,
+  ItemBreast: 0,
+  ItemVulva: 0,
+  ItemVulvaPiercings: 0,
+  ItemButt: 0,
+  ItemPelvis: 0,
+  ItemFeet: 0,
+  ItemBoots: 0,
+  ItemLegs: 0,
+  ItemDevices: 0,
+  activityOnOtherEvent: 0,
+};
+
+const xtoyminValues = {
+  ItemNeck: 0,
+  ItemArms: 0,
+  ItemNipplesPiercings: 0,
+  ItemNipples: 0,
+  ItemBreast: 0,
+  ItemVulva: 0,
+  ItemVulvaPiercings: 0,
+  ItemButt: 0,
+  ItemPelvis: 0,
+  ItemFeet: 0,
+  ItemBoots: 0,
+  ItemLegs: 0,
+  ItemDevices: 0,
+  activityOnOtherEvent: 0,
+};
 
 //#region Global Variables
 let OnTrue = false;
@@ -56,6 +90,7 @@ let activityOnOtherEvent;
 let activeparts;
 let Merged = {};
 let bpioswitch = "off";
+let xtoysswitch = "off";
 let slots = {
   slot1: 0,
 };
@@ -66,9 +101,52 @@ let validAssetNameOnOther;
 let clients = [];
 //#endregion
 
+process.on("uncaughtException", function (err) {
+  console.error("Caught exception: ", err);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
 // Serve frontend files
 app.use(express.static(path.join(process.cwd(), "public")));
 let file = path.join(process.cwd(), "public");
+
+const connector = new Buttplug.ButtplugNodeWebsocketClientConnector(
+  "ws://127.0.0.1:12345"
+);
+const client = new Buttplug.ButtplugClient("BCBridge");
+
+client.addListener("deviceadded", async (device) => {
+  console.log(`Device Connected: ${device.name}`);
+  client.devices.forEach((device) => console.log(`- ${device.name}`));
+
+  const simplifiedDevices = client.devices.map((device) => ({
+    DeviceIndex: device._deviceInfo.DeviceIndex,
+    DeviceName: device._deviceInfo.DeviceName,
+  }));
+  sendMessageToRenderer("synctoy", simplifiedDevices);
+  //console.log(simplifiedDevices);
+});
+client.addListener("deviceremoved", (device) => {
+  console.log(`Device Removed: ${device.name}`);
+
+  client.devices.forEach((device) => console.log(`- ${device.name}`));
+
+  const simplifiedDevices = client.devices.map((device) => ({
+    DeviceIndex: device._deviceInfo.DeviceIndex,
+    DeviceName: device._deviceInfo.DeviceName,
+  }));
+  sendMessageToRenderer("synctoy", simplifiedDevices);
+});
+
+client.addListener("disconnect", async () => {
+  sendMessageToRenderer("ServerStatus", "offline-plug");
+  bpioswitch = "off";
+  console.log("Butt Plug Disconnected");
+});
+
 // WebSocket connection
 wss.on("connection", (ws) => {
   clients.push(ws);
@@ -161,6 +239,16 @@ wss.on("connection", (ws) => {
             disconnectWebSocket();
           }
         }
+        if (data.arg.type === "xtoy") {
+          //all of xtoys stuff
+          if (data.arg.message === "xtoy-start") {
+            connectWebSocketxToys();
+          }
+          if (data.arg.message === "xtoy-stop") {
+            disconnectWebSocketxToys();
+          }
+        }
+
         if (data.arg.type === "bpiows") {
           SendSyncWebSocket();
         }
@@ -179,7 +267,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.3.0 Started +`);
+  console.log(`+ BC-Bridge v0.4.0 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -201,109 +289,100 @@ function allStatus() {
   } else {
     sendMessageToRenderer("ServerStatus", "offline-main");
   }
-  if (ws2) {
+  if (bpioswitch === "on") {
     sendMessageToRenderer("ServerStatus", "online-plug");
   } else {
     sendMessageToRenderer("ServerStatus", "offline-plug");
   }
+  if (xtoysswitch === "on") {
+    sendMessageToRenderer("ServerStatus", "online-xtoys");
+  } else {
+    sendMessageToRenderer("ServerStatus", "offline-xtoys");
+  }
+}
+
+// Start xToys Connection
+function connectWebSocketxToys() {
+  if (xtoysswitch === "on") {
+    console.log("xToys WebSocket server is already running.");
+  } else if (xtoysswitch === "off") {
+    console.log("xToys WebSocket server is running.");
+    xtoyssocket = new WebSocket.Server({ port: 12500 });
+    xtoysswitch = "on";
+
+    xtoyssocket.broadcast = function (data) {
+      xtoyssocket.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          console.log("xToys WebSocket" + data);
+          client.send(data);
+        }
+      });
+    };
+
+    sendMessageToRenderer("ServerStatus", "online-xtoys");
+    xtoyssocket.on("connection", (client) => {
+      client.on("message", (msg) => {
+        const command = JSON.parse(msg);
+        const value = command.test;
+      });
+
+      client.send(JSON.stringify(xtoyValues));
+    });
+  }
+}
+// Stop xToys Connection
+function disconnectWebSocketxToys() {
+  if (xtoyssocket) {
+    xtoysswitch = "off";
+    xtoyssocket.close();
+    xtoyssocket = null;
+    console.log("xToys WebSocket server closed.");
+    sendMessageToRenderer("ServerStatus", "offline-xtoys");
+  } else {
+    console.log("xToys WebSocket server is not running.");
+  }
 }
 // Start BP Connection
-function connectWebSocketBPIO() {
-  if (!ws2) {
-    const ip = "127.0.0.1";
-    const port = 12345;
-    const url = `ws://${ip}:${port}`;
-
-    ws2 = new WebSocket(url);
-
-    ws2.addEventListener("open", (event) => {
-      bpioswitch = "on";
-      //  console.log("WebSocket connection opened:", event);
+async function connectWebSocketBPIO() {
+  if (bpioswitch === "off") {
+    try {
+      await client.connect(connector);
+      await client.startScanning();
       sendMessageToRenderer("ServerStatus", "online-plug");
-      ws2.send(
-        '[{"RequestServerInfo":{"Id":1,"ClientName":"BCBridge","MessageVersion":2}}]'
-      );
-    });
-
-    ws2.addEventListener("message", (event) => {
-      console.log("WebSocket message:", event.data);
-      const data = JSON.parse(event.data);
-      const isServerInfo = data.some((item) =>
-        item.hasOwnProperty("ServerInfo")
-      );
-      const isDeviceList = data.some((item) =>
-        item.hasOwnProperty("DeviceList")
-      );
-
-      if (isServerInfo) {
-        console.log("Received ServerInfo:", data);
-        SendSyncWebSocket();
-      } else if (isDeviceList) {
-        console.log("Received DeviceList:", data);
-        const deviceListObj = data.find((item) =>
-          item.hasOwnProperty("DeviceList")
-        );
-        const deviceList = deviceListObj.DeviceList;
-        const devices = deviceList.Devices;
-        if (Array.isArray(devices)) {
-          // Create a new array with only DeviceIndex and DeviceName
-          const simplifiedDevices = devices.map((device) => {
-            return {
-              DeviceIndex: device.DeviceIndex,
-              DeviceName: device.DeviceName,
-            };
-          });
-          sendMessageToRenderer("synctoy", simplifiedDevices);
-          // Process the simplified devices array as needed
-        } else {
-          //console.log("Devices is not an array:", devices);
-        }
-
-        ws2.send('[{"StartScanning":{"Id":3}}]');
-      }
-    });
-
-    ws2.addEventListener("error", (event) => {
-      console.error("WebSocket error:", event);
-    });
-
-    ws2.addEventListener("close", (event) => {
-      sendMessageToRenderer("ServerStatus", "offline-plug");
-      console.log("Disconnecting WebSocket");
-      bpioswitch = "off";
-      console.log("WebSocket connection closed:", event);
-      ws2 = null;
-    });
+      bpioswitch = "on";
+    } catch (error) {
+      console.error("Failed to connect:", error);
+    }
   }
 }
-
 // Stop BP Connection
 function disconnectWebSocket() {
-  if (ws2 && ws2.readyState === WebSocket.OPEN) {
-    console.log("Disconnecting WebSocket");
-    ws2.close();
-    console.log("WebSocket connection closed.");
-    ws2 = null;
-  } else {
-    console.log("WebSocket is not connected.");
+  if (bpioswitch === "on") {
+    client.disconnect();
+    sendMessageToRenderer("ServerStatus", "offline-plug");
   }
 }
-
 // Ask BP for toy List
-function SendSyncWebSocket() {
-  console.log("Syncing WebSocket");
-  if (ws2 && ws2.readyState === WebSocket.OPEN) {
-    ws2.send('[{"RequestDeviceList":{"Id":2}}]');
+async function SendSyncWebSocket() {
+  if (bpioswitch === "on") {
+    await client.startScanning();
   } else {
-    console.log("WebSocket is not connected.");
+    console.log("Butt Plug is not connected.");
   }
 }
 function ws2SendRequest(data) {
-  console.log(data);
-  if (ws2 && ws2.readyState === WebSocket.OPEN) {
-    ws2.send(data);
-  } else {
-    console.log("WebSocket 2 ERR not connected.");
+  parsedData = JSON.parse(data);
+  if (bpioswitch === "on") {
+    const containsDeviceIndex = client.devices.some(
+      (device) => device._deviceInfo.DeviceIndex === parsedData.id
+    );
+
+    if (containsDeviceIndex) {
+      console.log("Vibrate on " + parsedData.id + " Speed " + parsedData.speed);
+      client.devices[parsedData.id].vibrate(parsedData.speed);
+    } else {
+      console.log("No device found with id: " + parsedData.id);
+    }
   }
 }
 
@@ -366,6 +445,46 @@ function startWebSocketServer() {
             }
           }
         }
+
+        if (MainSettings.xToy.Enabled) {
+          //xToys is enabled
+
+          //let randomNumber = Math.floor(Math.random() * 100) + 1;
+          //xtoyssocket.broadcast(JSON.stringify({ ItemVulva: randomNumber }));
+
+          const InvalidAssetGroupNames = [
+            "ItemEars",
+            "ItemHead",
+            "ItemNose",
+            "ItemMouth",
+            "ItemHands",
+          ];
+
+          if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
+            switch (data.action) {
+              case "activityEvent":
+                xtoy_handleActivityEvent(data);
+                break;
+              case "activityOnOtherEvent":
+                xtoy_handleActivityOnOtherEvent(data);
+                break;
+              case "itemRemoved":
+                xtoy_handleToyRemoveEvent(data);
+                break;
+              case "itemSwapped":
+                xtoy_handleToyRemoveEvent(data);
+                xtoy_handleToyAddEvent(data);
+                break;
+              case "itemAdded":
+                xtoy_handleToyAddEvent(data);
+                break;
+              case "toyEvent":
+                xtoy_handleToyEvent(data);
+                break;
+            }
+          }
+        }
+
         if (MainSettingsPi.PiShock.Enabled) {
           const InvalidAssetGroupNames = [
             "ItemEars",
@@ -722,7 +841,7 @@ async function initSettings(justSync = false) {
 
   validAssetNameOnOther = jsonDataParsed.validAssetName;
 
-  if (MainSettings.Intiface.Enabled) {
+  if (MainSettings.Intiface.Enabled || MainSettings.xToy.Enabled) {
     Merged = {};
     ItemArms = {};
     ItemBoots = {};
@@ -785,8 +904,11 @@ async function initSettings(justSync = false) {
       ItemNipplesPiercings
     );
     if (justSync === false) {
-      if (bpioswitch === "off") {
+      if (bpioswitch === "off" && MainSettings.Intiface.Enabled) {
         connectWebSocketBPIO();
+      }
+      if (xtoysswitch === "off" && MainSettings.xToy.Enabled) {
+        connectWebSocketxToys();
       }
     }
   }
@@ -1225,9 +1347,8 @@ async function updateJsonFile(BodyPart, data, Default) {
 // Puts together the CMD message
 // Will need to update to add toys other than Vibrate
 function generateVibrateCmdMessage(deviceId, temp1) {
-  const deviceId2 = Number(deviceId + 10);
   const temp2 = Number(temp1 / 100);
-  return `[{"VibrateCmd":{"Id":${deviceId2},"DeviceIndex":${deviceId},"Speeds":[{"Index":0,"Speed":${temp2}}]}}]`;
+  return `{"id":${deviceId},"speed":${temp2}}`;
 }
 
 // The Queue that holds actions allows actions to stack and de-stack
@@ -1582,3 +1703,284 @@ let fileQueueWorker = async.queue(function (task, callback) {
     callback(new Error("Invalid operation"));
   }
 }, 1);
+
+//#region XTOYS
+
+function xtoysSendRequest(operation) {
+  xtoyssocket.broadcast(JSON.stringify(operation));
+}
+
+// (XTOYS) Search Loaded JSON Activities for Actions from BC and get Amount and Duration
+// (XTOYS) On Missing Activity call updateJsonFile
+function xtoy_handleActivityEvent(data) {
+  const bodypart = data.assetGroupName;
+  const item = data.assetName;
+  const action = data.actionName;
+  let filename;
+  let dirname = data.assetGroupName;
+  let localData;
+  localData = Merged[bodypart];
+  if (item === "none") {
+    filename = action;
+    let AmountAndDuration;
+    AmountAndDuration = localData[action];
+    if (AmountAndDuration == undefined) {
+      AmountAndDuration = localData.Default;
+      Merged[bodypart][action] = AmountAndDuration;
+      updateJsonFile(bodypart, data, AmountAndDuration);
+    }
+    xtoys_sendPreQ(bodypart, AmountAndDuration, dirname, filename);
+  } else {
+    filename = action + item;
+    let missingdata = false;
+    if (!localData[action]) {
+      missingdata = true;
+      localData[action] = {};
+    }
+    if (!localData[action][item]) {
+      missingdata = true;
+      localData[action][item] = {};
+    }
+    if (missingdata === true) {
+      AmountAndDuration = localData.Default;
+      Merged[bodypart][action][item] = AmountAndDuration;
+      xtoys_sendPreQ(bodypart, AmountAndDuration, dirname, filename);
+      updateJsonFile(bodypart, data, AmountAndDuration);
+    } else {
+      let ActionName = localData[action];
+      let AmountAndDuration = ActionName[item];
+      xtoys_sendPreQ(bodypart, AmountAndDuration, dirname, filename);
+    }
+  }
+}
+// (XTOYS) Pre Q
+function xtoys_sendPreQ(bodypart, AmountAndDuration, dir, path) {
+  console.log("------ pre Q Xtoys ------");
+  console.log(bodypart);
+  console.log(AmountAndDuration);
+  console.log(dir);
+  console.log(path);
+  console.log("------ pre Q Xtoys ------");
+
+  if (AmountAndDuration.FunScript === true) {
+    Queue_Vibr_xtoys.push({
+      part: bodypart,
+      intensity: AmountAndDuration.Amount,
+      timeout: AmountAndDuration.Duration,
+      funscript: true,
+      funscriptdir: dir,
+      funscriptpath: path,
+    });
+  } else {
+    Queue_Vibr_xtoys.push({
+      part: bodypart,
+      intensity: AmountAndDuration.Amount,
+      timeout: AmountAndDuration.Duration,
+    });
+  }
+}
+// (XTOYS) Queue_Vibr_xtoys
+let Queue_Vibr_xtoys = async.queue(async function (task) {
+  if (task.funscript === true) {
+    console.log(
+      `Performing Fun Script: ${task.part} Dir: ${task.funscriptdir} Funscript: ${task.funscriptpath}`
+    );
+    const filePath = path.join(
+      process.cwd(),
+      "funscripts/" + task.funscriptdir,
+      task.funscriptpath + ".funscript"
+    );
+    console.log(filePath);
+    const funscriptData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const actions = funscriptData.actions;
+    // Run the Funscript
+    console.log("Running Funscript...");
+    let lastActionTime = 0;
+    for (const action of actions) {
+      const currentTime = action.at;
+      const position = action.pos;
+
+      // Calculate sleep duration based on the timestamp difference
+      const sleepDuration = currentTime - lastActionTime;
+
+      // Wait for the sleep duration
+      await new Promise((resolve) => setTimeout(resolve, sleepDuration));
+
+      // Move all connected devices to the target position
+      let currentValue = xtoyValues[task.part];
+      let newValue = currentValue + position;
+      let minValue = xtoyminValues[task.part];
+
+      if (currentValue < 0) {
+        xtoyValues[task.part] = 0;
+      }
+      if (minValue < 0) {
+        xtoyminValues[task.part] = 0;
+      }
+
+      let temp1 = minValue + newValue;
+      temp1 = Math.min(temp1, 100);
+
+      xtoysSendRequest({ [task.part]: temp1 });
+
+      console.log(position);
+      console.log(action.at);
+
+      lastActionTime = currentTime;
+    }
+
+    console.log("Finished running Funscript.");
+  } else {
+    console.log(
+      `Performing task: ${task.part} intensity: ${task.intensity} Delay: ${task.timeout}`
+    );
+    console.log("----------------------------------");
+
+    let currentValue = xtoyValues[task.part];
+    let newValue = currentValue + task.intensity;
+    let minValue = xtoyminValues[task.part];
+
+    if (currentValue < 0) {
+      xtoyValues[task.part] = 0;
+    }
+    if (minValue < 0) {
+      xtoyminValues[task.part] = 0;
+    }
+
+    xtoyValues[task.part] = newValue;
+
+    let temp1 = minValue + newValue;
+    temp1 = Math.min(temp1, 100);
+
+    xtoysSendRequest({ [task.part]: temp1 });
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        let currentValue = xtoyValues[task.part];
+        let minValue = xtoyminValues[task.part];
+        let newValue = currentValue - task.intensity;
+        xtoyValues[task.part] = newValue;
+
+        let temp1 = minValue + newValue;
+        temp1 = Math.min(temp1, 100);
+
+        xtoysSendRequest({ [task.part]: temp1 });
+
+        resolve();
+      }, task.timeout + 500);
+    });
+  }
+}, 150);
+
+// (XTOYS) Search Loaded JSON Activities for Actions from BC and get Amount and Duration
+// (XTOYS) On Missing Activity call updateJsonFile
+function xtoy_handleActivityOnOtherEvent(data) {
+  let filename;
+  const item = data.assetName;
+  const action = data.actionName;
+  let localData = Merged.activityOnOtherEvent;
+  if (item === "none") {
+    //this is where head pats and cuddles are
+  } else if (validAssetNameOnOther.includes(item)) {
+    filename = action + item;
+    // Items match the JSON data
+    // Target Location (assetGroupName) >> assetName >> actionName
+    let Default = localData.Default;
+    let missingdata = false;
+    // Check if the asset group exists
+    if (!localData[data.assetGroupName]) {
+      localData[data.assetGroupName] = {};
+      missingdata = true;
+    }
+    // Check if the item exists within the asset group
+    if (!localData[data.assetGroupName][item]) {
+      localData[data.assetGroupName][item] = {};
+      missingdata = true;
+    }
+    // Check if the action exists within the item
+    if (!localData[data.assetGroupName][item][action]) {
+      localData[data.assetGroupName][item][action] = Default;
+      missingdata = true;
+    }
+
+    if (missingdata === true) {
+      let AmountAndDuration = localData.Default;
+      Object.assign(Merged.activityOnOtherEvent, localData);
+      updateJsonFile("activityOnOther", data, AmountAndDuration);
+    } else {
+      let AmountAndDuration =
+        localData[data.assetGroupName][item][data.actionName];
+      if (AmountAndDuration == undefined) {
+        AmountAndDuration = localData.Default;
+        Merged.activityOnOtherEvent[data.assetGroupName][item][
+          data.actionName
+        ] = AmountAndDuration;
+        updateJsonFile("activityOnOther", data, AmountAndDuration);
+      }
+      xtoys_sendPreQ(
+        "activityOnOtherEvent",
+        AmountAndDuration,
+        "activityOnOtherEvent/" + data.assetGroupName,
+        filename
+      );
+    }
+  }
+}
+// (XTOYS) If Toy is removed in game it will send 0 to BP
+function xtoy_handleToyRemoveEvent(data) {
+  const bodypart = data.assetGroupName;
+  xtoy_sendPreQToyMin(bodypart, 0);
+}
+// (XTOYS) Search Loaded JSON for Toy values and updated the Min on slot
+function xtoy_handleToyEvent(data) {
+  const bodypart = data.assetGroupName;
+  let localData;
+  localData = Merged[bodypart];
+  if (data.level === 0) {
+    xtoy_sendPreQToyMin(bodypart, 0);
+  } else if (data.level === 1) {
+    xtoy_sendPreQToyMin(bodypart, localData.Toys.low);
+  } else if (data.level === 2) {
+    xtoy_sendPreQToyMin(bodypart, localData.Toys.medium);
+  } else if (data.level === 3) {
+    xtoy_sendPreQToyMin(bodypart, localData.Toys.high);
+  } else if (data.level === 4) {
+    xtoy_sendPreQToyMin(bodypart, localData.Toys.max);
+  }
+}
+// (XTOYS) Updates the Slot Min
+function xtoy_sendPreQToyMin(bodypart, minValue) {
+  xtoyminValues[bodypart] = minValue;
+  Queue_Vibr_xtoys.push({
+    part: bodypart,
+    intensity: 0,
+    timeout: 10,
+  });
+}
+
+function xtoy_handleToyAddEvent(data) {
+  const bodypart = data.assetGroupName;
+  const item = data.assetName;
+  let filename;
+  let dirname = data.assetGroupName;
+  let localData;
+  localData = Merged[bodypart].ItemAdded;
+  filename = "ItemAdded" + item;
+  if (localData === undefined) {
+    Merged[bodypart].ItemAdded = {};
+    localData = Merged[bodypart].ItemAdded;
+  }
+  if (!localData[item]) {
+    localData[item] = {
+      Amount: 0,
+      Duration: 1000,
+      FunScript: false,
+    };
+    sendPreQ(bodypart, localData[item], dirname, filename);
+    updateJsonFile_ItemAdded(bodypart, data);
+  } else {
+    xtoys_sendPreQ(bodypart, localData[item], dirname, filename);
+  }
+}
+
+//#endregion

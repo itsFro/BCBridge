@@ -24,7 +24,7 @@
           </button>
           <button id="all-json-button" class="flex w-full items-center mb-2 bg-gray-700 px-3 py-2 rounded">
             <img src="./imgs/actions.svg" height="20" width="20" class="mr-2"></img>
-            <span>Actions Intiface</span>
+            <span>Actions</span>
           </button>
           <button id="local-settings-button" class="block w-full text-middle mb-2 bg-gray-700 px-3 py-2 rounded" style="display: none;">2B Links </a>
           </button>
@@ -63,9 +63,9 @@
               <button id="copy-button" class="bg-gray-800 text-gray-200 h-8 px-6 py-2 rounded-r-2xl flex hover:bg-gray-600"><img src="./imgs/clipboard.svg" height="18" width="18" class="mr-2"></img><span class="text-xs mr-2 pr-2">Copy</span></button>
               
           </div>
-            <div class="input-group flex flex-row mb-4">
+          <div class="input-group flex flex-row mb-4">
               <button id="mainStart" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Start</button>
-              <button id="mainStop" class="w-full bg-red-600 px-3 py-2 rounded">Stop</button>
+              <button id="mainStop" class="w-full bg-red-600 px-3 py-2 rounded mr-2">Stop</button>
             </div>
             <div class="input-group flex mb-4">
               <div id="mainConnectStatus" class="w-6 h-6 bg-red-700 rounded-full"></div>
@@ -86,7 +86,7 @@
               <div class="input-group flex flex-row mb-4">
                 <button id="PlugConnect" class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Connect</button>
                 <button id="PlugDisconnect" class="w-full bg-red-600 px-3 py-2 rounded mr-2">Disconnect</button>
-                <button id="PlugSync" class="w-full bg-green-600 px-3 py-2 rounded">Sync</button>
+                <!--<button id="PlugSync" class="w-full bg-green-600 px-3 py-2 rounded">Sync</button>-->
               </div>
               <div class="input-group flex">
                 <div id="PlugConnectStatus" class="w-6 h-6 bg-red-700 rounded-full"></div>
@@ -95,23 +95,28 @@
             </fieldset>
           </div>
             <!-- Toy section -->
-            <fieldset class="mb-4" style="display: none;">
+            <fieldset class="mb-6" >
               <legend class="text-lg font-semibold mb-2">xToys</legend>
-              <p class="mb-4">Information about xToys</p>
-              <div class="input-group mb-4">
+              <p class="">BcBridge will act as a custom toy that xToys connects to (port: 123500)</p>
+              <p class="mb-4">Load the custom layout : { PLACEHOLDER URL WILL BE HERE }</p>
+             <!--  <div class="input-group mb-4">
                 <label for="xToyAPIInput" class="block mb-1">API Input:</label>
                 <input type="text" id="xToyAPIInput" class="focus:outline-none focus:ring focus:border-blue-200  bg-gray-700 rounded px-3 py-2 w-full">
-              </div>
+              </div> -->
               <div class="input-group">
-                <label for="xToyEnabled">Enabled:</label>
                 <label class="switch">
                   <input type="checkbox" id="xToyEnabled">
                   <span class="slider round"></span>
                 </label>
+                <label for="xToyEnabled" class="ml-2">Enabled</label>
               </div>
-              <div class="input-group">
-                <button id="xToyConnect" class="bg-blue-600 px-3 py-2 rounded mr-2">Connect</button>
-                <button id="xToyDisconnect" class="bg-red-600 px-3 py-2 rounded">Disconnect</button>
+              <div class="input-group flex flex-row mb-4">
+                <button id="xToyConnect"  class="w-full bg-blue-600 px-3 py-2 rounded mr-2">Start</button>
+                <button id="xToyDisconnect" class="w-full bg-red-600 px-3 py-2 rounded mr-2">Stop</button>
+              </div>
+              <div class="input-group flex">
+                <div id="xToyConnectStatus" class="w-6 h-6 bg-red-700 rounded-full"></div>
+                <p id="xToyConnectStatus_p" class="ml-2 font-thin">Offline</p>
               </div>
             </fieldset>
             <!-- Local section -->

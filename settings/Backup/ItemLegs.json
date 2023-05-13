@@ -1,4 +1,10 @@
 {
+  "Toys": {
+    "low": 25,
+    "medium": 50,
+    "high": 75,
+    "max": 100
+  },
   "Default": {
     "Amount": 10,
     "Duration": 3000,
