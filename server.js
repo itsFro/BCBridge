@@ -267,7 +267,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.4.0 Started +`);
+  console.log(`+ BC-Bridge v0.4.1 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -414,11 +414,18 @@ function startWebSocketServer() {
         if (MainSettings.Intiface.Enabled) {
           //iniface is enabled
           const InvalidAssetGroupNames = [
+            "ItemMisc",
             "ItemEars",
             "ItemHead",
             "ItemNose",
             "ItemMouth",
             "ItemHands",
+            "ItemAddon",
+            "ItemNeckAccessories",
+            "ItemNeckRestraints",
+            "ItemTorso",
+            "ItemTorso2",
+            "ItemHandheld",
           ];
 
           if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
@@ -453,11 +460,18 @@ function startWebSocketServer() {
           //xtoyssocket.broadcast(JSON.stringify({ ItemVulva: randomNumber }));
 
           const InvalidAssetGroupNames = [
+            "ItemMisc",
             "ItemEars",
             "ItemHead",
             "ItemNose",
             "ItemMouth",
             "ItemHands",
+            "ItemAddon",
+            "ItemNeckAccessories",
+            "ItemNeckRestraints",
+            "ItemTorso",
+            "ItemTorso2",
+            "ItemHandheld",
           ];
 
           if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
