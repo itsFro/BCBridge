@@ -277,7 +277,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.4.2 Started +`);
+  console.log(`+ BC-Bridge v0.4.3 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
