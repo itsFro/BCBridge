@@ -565,7 +565,7 @@ async function init() {
     .getElementById("PlugDisconnect")
     .addEventListener("click", () => msgToMain("bpio", "bp-io-stop"));
 
-  // document.getElementById("PlugSync").addEventListener("click", SyncToys);
+  document.getElementById("PlugSync").addEventListener("click", SyncToys);
 
   document
     .getElementById("xToyConnect")

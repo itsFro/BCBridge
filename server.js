@@ -120,24 +120,34 @@ const client = new Buttplug.ButtplugClient("BCBridge");
 
 client.addListener("deviceadded", async (device) => {
   console.log(`Device Connected: ${device.name}`);
-  client.devices.forEach((device) => console.log(`- ${device.name}`));
+  let baseIndex = 0;
+  client.devices.forEach((device) =>
+    console.log(`- ${device.name} index : ${device._deviceInfo.DeviceIndex}`)
+  );
 
-  const simplifiedDevices = client.devices.map((device) => ({
-    DeviceIndex: device._deviceInfo.DeviceIndex,
-    DeviceName: device._deviceInfo.DeviceName,
-  }));
+  const simplifiedDevices = client.devices.map((device) => {
+    return {
+      DeviceIndex: baseIndex++,
+      DeviceName: device._deviceInfo.DeviceName,
+    };
+  });
   sendMessageToRenderer("synctoy", simplifiedDevices);
   //console.log(simplifiedDevices);
 });
 client.addListener("deviceremoved", (device) => {
   console.log(`Device Removed: ${device.name}`);
 
-  client.devices.forEach((device) => console.log(`- ${device.name}`));
+  let baseIndex = 0;
+  client.devices.forEach((device) =>
+    console.log(`- ${device.name} index : ${device._deviceInfo.DeviceIndex}`)
+  );
 
-  const simplifiedDevices = client.devices.map((device) => ({
-    DeviceIndex: device._deviceInfo.DeviceIndex,
-    DeviceName: device._deviceInfo.DeviceName,
-  }));
+  const simplifiedDevices = client.devices.map((device) => {
+    return {
+      DeviceIndex: baseIndex++,
+      DeviceName: device._deviceInfo.DeviceName,
+    };
+  });
   sendMessageToRenderer("synctoy", simplifiedDevices);
 });
 
@@ -267,7 +277,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.4.1 Started +`);
+  console.log(`+ BC-Bridge v0.4.2 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -366,6 +376,20 @@ function disconnectWebSocket() {
 async function SendSyncWebSocket() {
   if (bpioswitch === "on") {
     await client.startScanning();
+    console.log(`Syncing Toys List`);
+    let baseIndex = 0;
+    client.devices.forEach((device) =>
+      console.log(`- ${device.name} index : ${device._deviceInfo.DeviceIndex}`)
+    );
+
+    const simplifiedDevices = client.devices.map((device) => {
+      return {
+        DeviceIndex: baseIndex++,
+        DeviceName: device._deviceInfo.DeviceName,
+      };
+    });
+    console.log(simplifiedDevices);
+    sendMessageToRenderer("synctoy", simplifiedDevices);
   } else {
     console.log("Butt Plug is not connected.");
   }
@@ -378,10 +402,15 @@ function ws2SendRequest(data) {
     );
 
     if (containsDeviceIndex) {
-      console.log("Vibrate on " + parsedData.id + " Speed " + parsedData.speed);
+      console.log(
+        "1 - Vibrate on " + parsedData.id + " Speed " + parsedData.speed
+      );
       client.devices[parsedData.id].vibrate(parsedData.speed);
     } else {
-      console.log("No device found with id: " + parsedData.id);
+      console.log(
+        "2 - Vibrate on " + parsedData.id + " Speed " + parsedData.speed
+      );
+      client.devices[parsedData.id].vibrate(parsedData.speed);
     }
   }
 }
@@ -1421,6 +1450,7 @@ let Queue_Vibr = async.queue(async function (task) {
     console.log(
       `Performing task: ${task.Deviceid} intensity: ${task.intensity} Delay: ${task.timeout}`
     );
+    console.log(client.devices);
     console.log("----------------------------------");
 
     let currentValue = slots["slot" + task.Deviceid];
