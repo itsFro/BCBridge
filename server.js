@@ -448,6 +448,8 @@ function startWebSocketServer() {
             "ItemHead",
             "ItemNose",
             "ItemMouth",
+            "ItemMouth2",
+            "ItemMouth3",
             "ItemHands",
             "ItemAddon",
             "ItemNeckAccessories",
@@ -455,6 +457,7 @@ function startWebSocketServer() {
             "ItemTorso",
             "ItemTorso2",
             "ItemHandheld",
+            "ItemHood",
           ];
 
           if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
@@ -494,6 +497,8 @@ function startWebSocketServer() {
             "ItemHead",
             "ItemNose",
             "ItemMouth",
+            "ItemMouth2",
+            "ItemMouth3",
             "ItemHands",
             "ItemAddon",
             "ItemNeckAccessories",
@@ -501,6 +506,7 @@ function startWebSocketServer() {
             "ItemTorso",
             "ItemTorso2",
             "ItemHandheld",
+            "ItemHood",
           ];
 
           if (!InvalidAssetGroupNames.includes(data.assetGroupName)) {
@@ -534,7 +540,10 @@ function startWebSocketServer() {
             "ItemHead",
             "ItemNose",
             "ItemMouth",
+            "ItemMouth2",
+            "ItemMouth3",
             "ItemHands",
+            "ItemHood",
           ];
           PiData = JSON.parse(message);
 
@@ -1450,7 +1459,6 @@ let Queue_Vibr = async.queue(async function (task) {
     console.log(
       `Performing task: ${task.Deviceid} intensity: ${task.intensity} Delay: ${task.timeout}`
     );
-    console.log(client.devices);
     console.log("----------------------------------");
 
     let currentValue = slots["slot" + task.Deviceid];
