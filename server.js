@@ -277,7 +277,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.4.3 Started +`);
+  console.log(`+ BC-Bridge v0.4.4 Started (Norin update) +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -547,18 +547,13 @@ function startWebSocketServer() {
           ];
           PiData = JSON.parse(message);
 
-          //{"action": "shockEvent", "assetGroupName": "ItemNeckAccessories", "level": 0} TODO
+          // OLD: {"action": "shockEvent", "assetGroupName": "ItemNeckAccessories", "level": 0} TODO
+          // NEW: {"action": "activityEvent", "assetGroupName": "ItemNeck", "actionName": "ShockLow", "assetName": "PetSuitShockCollar"}
           if (
             data.action == "activityEvent" &&
             !InvalidAssetGroupNames.includes(data.assetGroupName)
           ) {
             handlePiActivityEvent(data);
-          }
-          if (
-            data.action == "shockEvent" &&
-            !InvalidAssetGroupNames.includes(data.assetGroupName)
-          ) {
-            handlePiShockEvent(data);
           }
         }
       });
@@ -1573,13 +1568,29 @@ async function postRequest(requestBody) {
   }
 }
 
-// Checks if Device is Active (from an activity in game) => piChecking
+// Checks if Device is Active:
+// (from an activity in game) => piChecking
+// (from a Shock event in game) => handlePiShockPostLevels
+
+// {"action": "activityEvent", "assetGroupName": "ItemNeck", "actionName": "ShockLow", "assetName": "PetSuitShockCollar"}
+
 function handlePiActivityEvent(data) {
   for (const key in ListPiEnabled) {
     if (ListPiEnabled[key] === true && PiSettings[key].isEnabled === true) {
-      let ItemUsed = data.assetName;
       let LocationOfActivity = data.assetGroupName;
-      piChecking(key, ItemUsed, LocationOfActivity);
+
+      const shockLevelNameMap = ["ShockLow", "ShockMed", "ShockHigh"];
+
+      let ItemLevel = shockLevelNameMap.indexOf(data.actionName);
+      if (ItemLevel != -1) {
+        // shock
+        handlePiShockPostLevels(key, LocationOfActivity, ItemLevel, 0);
+        handlePiShockPostLevels(key, LocationOfActivity, ItemLevel, 1);
+      } else {
+        // activity
+        let ItemUsed = data.assetName;
+        piChecking(key, ItemUsed, LocationOfActivity);
+      }
     }
   }
 }
@@ -1631,18 +1642,6 @@ function handlePiShockPost(
         Op: operation,
       };
       PiShockPost(piPostData);
-    }
-  }
-}
-
-// Checks if Device is Active (from a Shock event in game) => handlePiShockPostLevels
-function handlePiShockEvent(data) {
-  for (const key in ListPiEnabled) {
-    if (ListPiEnabled[key] === true && PiSettings[key].isEnabled === true) {
-      let ItemLevel = data.level;
-      let LocationOfActivity = data.assetGroupName;
-      handlePiShockPostLevels(key, LocationOfActivity, ItemLevel, 0);
-      handlePiShockPostLevels(key, LocationOfActivity, ItemLevel, 1);
     }
   }
 }
