@@ -130,21 +130,20 @@ function updateSwitches() {
 }
 
 async function loadPlugSettings() {
-  // console.log("Loading settings");
-
   const settingsData = await requestJsonData("settingspage.json");
 
   for (const key in settingsData) {
-    // console.log("Setting " + key);
-    const dropdown = document.getElementById(key);
+    const element = document.getElementById(key);
     const settingValue = settingsData[key];
-    // Check if the desired option exists in the dropdown
-    const optionExists = Array.from(dropdown.options).some(
-      (option) => option.value === settingValue
-    );
 
-    // Set the dropdown value based on the JSON data or select "none" if the option doesn't exist
-    dropdown.value = optionExists ? settingValue : "none";
+    if (element.tagName === "SELECT") {
+      const optionExists = Array.from(element.options).some(
+        (option) => option.value === settingValue
+      );
+      element.value = optionExists ? settingValue : "none";
+    } else if (element.tagName === "INPUT") {
+      element.value = settingValue;
+    }
   }
 }
 

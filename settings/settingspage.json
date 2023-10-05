@@ -12,5 +12,7 @@
   "ItemFeet": "none",
   "ItemBoots": "none",
   "ItemDevices": "none",
-  "activityOnOther": "none"
+  "activityOnOther": "none",
+  "cooldown": "1000",
+  "Rotation": "clockwise"
 }

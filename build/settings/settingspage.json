@@ -12,5 +12,6 @@
   "ItemFeet": "none",
   "ItemBoots": "none",
   "ItemDevices": "none",
-  "activityOnOther": "none"
+  "activityOnOther": "none",
+  "Rotation": "clockwise"
 }

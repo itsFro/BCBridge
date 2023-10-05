@@ -756,12 +756,14 @@ async function save() {
     addLogEntry("-- Saved --");
   } else if (PageName === "plug-settings") {
     addLogEntry("-- Saving Intiface Toys Page --");
-    const inputs = document.querySelectorAll("#plug-settings select");
+    const elements = document.querySelectorAll(
+      "#plug-settings select, #plug-settings input"
+    );
     const newData = {};
 
-    inputs.forEach((input) => {
-      const label = input.id;
-      newData[label] = input.value;
+    elements.forEach((element) => {
+      const label = element.id;
+      newData[label] = element.value;
     });
     socket.send(
       JSON.stringify({
@@ -771,7 +773,6 @@ async function save() {
       })
     );
 
-    // alert('Plug settings saved.');
     addLogEntry("-- Saved Intiface Toys Page --");
   } else if (PageName === "local-settings") {
     const inputs = document.querySelectorAll("#local-settings select");

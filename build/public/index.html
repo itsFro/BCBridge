@@ -98,7 +98,7 @@
             <fieldset class="mb-6" >
               <legend class="text-lg font-semibold mb-2">xToys</legend>
               <p class="">BcBridge will act as a custom toy that xToys connects to (port: 123500)</p>
-              <p class="mb-4">Load the custom layout : { PLACEHOLDER URL WILL BE HERE }</p>
+              <p class="mb-4">Load the custom layout : <a href="https://xtoys.app/layouts/-NVKfYANSoF-uI3eLkYW"  target="_blank" style="color: rgb(54, 113, 240);">{ Xtoys Layout }</a></p>
              <!--  <div class="input-group mb-4">
                 <label for="xToyAPIInput" class="block mb-1">API Input:</label>
                 <input type="text" id="xToyAPIInput" class="focus:outline-none focus:ring focus:border-blue-200  bg-gray-700 rounded px-3 py-2 w-full">
@@ -316,7 +316,7 @@
             <img src="./imgs/link.svg" height="20" width="20"></img>
             <h2 class="text-2xl font-bold mb-4">Intiface Toys</h2>
             <p>Link devices from Intiface to body parts then click save.</p>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap mb-4">
               <div class="input-group m-4">
                 <label for="plugSetting1" class="block mb-1">ItemNeck:</label>
                 <select id="ItemNeck" class="bg-gray-700 rounded px-3 py-2 w-40">
@@ -404,8 +404,40 @@
                 </select>
               </div>
             </div>
+            <div class="mb-4">
+              <p>If a toy has a rotation feature, you can change its direction below. This will affect all toys globally that have a rotation.</p>
+            </div>
+            <div class="flex flex-wrap mb-4">
+              <div class="input-group mb-4 flex flex-row">
+                <div class="flex flex-row w-full pr-2 pl-2">
+                  <label for="plugSetting16" class="align-middle px-3 py-2 w-full">cooldown:</label>
+                  <input type="number" id="cooldown" class="bg-gray-700 px-3 py-2 w-full rounded-l-lg custom-input" min="20" max="10000">
+                  <div class="flex flex-col">
+                    <button onmousedown="startIncrement(document.getElementById('cooldown'))" onmouseup="stopIncrement()" onmouseleave="stopIncrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-tr-lg focus:outline-none">+</button>
+                    <button onmousedown="startDecrement(document.getElementById('cooldown'))" onmouseup="stopDecrement()" onmouseleave="stopDecrement()" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-full rounded-br-lg focus:outline-none">-</button>
+                  </div>
+                  <div class="flex flex-row w-full pr-2 pl-2">
+                    <label for="ShockMaxInput" class="align-middle px-3 py-2 w-48">Rotation Method:</label>
+                  <select id="Rotation" class="bg-gray-700 rounded px-3 py-2 w-40">
+                    <option value="clockwise">clockwise</option>
+                    <option value="counterclockwise">counter-clockwise</option>
+                    <option value="alternating">alternating</option>
+                    <option value="random">random</option>
+                  </select>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <p class="text-sm text-slate-500">The cooldown is the amount in milliseconds before the rotation can be switched again.</p>
+              <p class="text-sm text-slate-500">Rotation Methods:</p>
+              <p class="text-sm text-slate-500">Clockwise - Only rotates clockwise.</p>
+              <p class="text-sm text-slate-500">Counterclockwise - Only rotates counterclockwise.</p>
+              <p class="text-sm text-slate-500">Alternating - Alternates between clockwise and counterclockwise rotations.</p>
+              <p class="text-sm text-slate-500">Random - 50% chance to rotate either clockwise or counterclockwise.</p>
+              </div>
             <div>
-              <p class="text-center text-sm text-slate-500">Note: if devices do not show try checking connection, Intiface will only allow one program to connect to it at a time. if the Intiface shows connected (BCBridge Connected) try clicking the sync button on the main page </p>
+              <p class="text-sm text-slate-500">Note: if devices do not show try checking connection, Intiface will only allow one program to connect to it at a time. if the Intiface shows connected (BCBridge Connected) try clicking the sync button on the main page </p>
             </div>
           </div>
           <div id="local-settings" style="display: none;">

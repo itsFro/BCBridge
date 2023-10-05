@@ -99,6 +99,9 @@ let slotsmin = {
 };
 let validAssetNameOnOther;
 let clients = [];
+let lastRotation = "clockwise";
+let lastRotationChangeTimestamp = Date.now();
+
 //#endregion
 
 process.on("uncaughtException", function (err) {
@@ -120,10 +123,12 @@ const client = new Buttplug.ButtplugClient("BCBridge");
 
 client.addListener("deviceadded", async (device) => {
   console.log(`Device Connected: ${device.name}`);
+
   let baseIndex = 0;
   client.devices.forEach((device) =>
     console.log(`- ${device.name} index : ${device._deviceInfo.DeviceIndex}`)
   );
+  // console.log(`- ${JSON.stringify(device)}`);
 
   const simplifiedDevices = client.devices.map((device) => {
     return {
@@ -277,7 +282,7 @@ wss.on("connection", (ws) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.4.4 Started (Norin update) +`);
+  console.log(`+ BC-Bridge v0.5.0 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -394,27 +399,139 @@ async function SendSyncWebSocket() {
     console.log("Butt Plug is not connected.");
   }
 }
+// Rotation Added
 function ws2SendRequest(data) {
-  parsedData = JSON.parse(data);
+  const parsedData = JSON.parse(data);
+  let COOLDOWN_DURATION = activeparts.cooldown;
   if (bpioswitch === "on") {
-    const containsDeviceIndex = client.devices.some(
+    const targetDevice = client.devices.find(
       (device) => device._deviceInfo.DeviceIndex === parsedData.id
     );
 
-    if (containsDeviceIndex) {
-      console.log(
-        "1 - Vibrate on " + parsedData.id + " Speed " + parsedData.speed
-      );
-      client.devices[parsedData.id].vibrate(parsedData.speed);
-    } else {
-      console.log(
-        "2 - Vibrate on " + parsedData.id + " Speed " + parsedData.speed
-      );
-      client.devices[parsedData.id].vibrate(parsedData.speed);
+    if (targetDevice) {
+      const deviceMessages = targetDevice._deviceInfo.DeviceMessages;
+
+      if (deviceMessages && deviceMessages.ScalarCmd) {
+        const hasVibrate = deviceMessages.ScalarCmd.some(
+          (msg) => msg.ActuatorType === "Vibrate"
+        );
+        const hasRotate = deviceMessages.RotateCmd != null;
+
+        if (hasVibrate) {
+          console.log(
+            "Vibrate on " + parsedData.id + " Speed " + parsedData.speed
+          );
+          targetDevice.vibrate(parsedData.speed);
+        }
+
+        if (hasRotate) {
+          const currentTime2 = Date.now();
+
+          if (
+            activeparts.Rotation === "clockwise" ||
+            activeparts.Rotation === "counterclockwise"
+          ) {
+            let newDirectionIsClockwise = activeparts.Rotation === "clockwise";
+
+            // Check cooldown or if direction hasn't changed
+            if (
+              currentTime2 - lastRotationChangeTimestamp >= COOLDOWN_DURATION ||
+              newDirectionIsClockwise === (lastRotation === "clockwise")
+            ) {
+              console.log(
+                "Rotate on " +
+                  parsedData.id +
+                  " Speed " +
+                  parsedData.speed +
+                  " Direction: " +
+                  (newDirectionIsClockwise ? "Clockwise" : "Counterclockwise")
+              );
+              lastRotation = newDirectionIsClockwise
+                ? "clockwise"
+                : "counterclockwise";
+              targetDevice.rotate(parsedData.speed, newDirectionIsClockwise);
+
+              // Update timestamp if direction changed
+              if (newDirectionIsClockwise !== (lastRotation === "clockwise")) {
+                lastRotationChangeTimestamp = currentTime2;
+              }
+            } else {
+              // Cooldown active, just update speed without changing rotation direction
+              targetDevice.rotate(
+                parsedData.speed,
+                lastRotation === "clockwise"
+              );
+            }
+          } else if (activeparts.Rotation === "alternating") {
+            if (
+              currentTime2 - lastRotationChangeTimestamp >=
+              COOLDOWN_DURATION
+            ) {
+              if (lastRotation === "clockwise") {
+                console.log(
+                  "Rotate on " +
+                    parsedData.id +
+                    " Speed " +
+                    parsedData.speed +
+                    " Direction: Counterclockwise (Alternating)"
+                );
+                lastRotation = "counterclockwise";
+                targetDevice.rotate(parsedData.speed, false);
+              } else {
+                console.log(
+                  "Rotate on " +
+                    parsedData.id +
+                    " Speed " +
+                    parsedData.speed +
+                    " Direction: Clockwise (Alternating)"
+                );
+                lastRotation = "clockwise";
+                targetDevice.rotate(parsedData.speed, true);
+              }
+
+              lastRotationChangeTimestamp = currentTime2;
+            } else {
+              // Cooldown active, just update speed without changing rotation direction
+              targetDevice.rotate(
+                parsedData.speed,
+                lastRotation === "clockwise"
+              );
+            }
+          } else if (activeparts.Rotation === "random") {
+            if (
+              currentTime2 - lastRotationChangeTimestamp >=
+              COOLDOWN_DURATION
+            ) {
+              // Only roll for a new direction if the cooldown duration has been exceeded
+              let randomRotate = Math.random() < 0.5;
+              let direction = randomRotate ? "Clockwise" : "Counterclockwise";
+
+              console.log(
+                "Rotate on " +
+                  parsedData.id +
+                  " Speed " +
+                  parsedData.speed +
+                  " Direction: " +
+                  direction +
+                  " (Random)"
+              );
+
+              lastRotation = randomRotate ? "clockwise" : "counterclockwise";
+              targetDevice.rotate(parsedData.speed, randomRotate);
+              lastRotationChangeTimestamp = currentTime2; // Update the timestamp
+            } else {
+              // Not enough time has elapsed, maintain the same direction but update speed
+              targetDevice.rotate(
+                parsedData.speed,
+                lastRotation === "clockwise"
+              );
+            }
+          }
+        }
+      }
     }
   }
 }
-
 // Send a Message to the Renderer.js
 function sendMessageToRenderer(type, message, color = "#333") {
   let messagejson = {
