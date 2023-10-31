@@ -1,6 +1,6 @@
 {
   "name": "bc-bridge",
-  "version": "1.0.0",
+  "version": "0.5.1",
   "description": "Convert Actions and Activities from Bondage Club to toy events",
   "main": "server.js",
   "bin": "server.js",

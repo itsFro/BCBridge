@@ -122,7 +122,8 @@ const connector = new Buttplug.ButtplugNodeWebsocketClientConnector(
 const client = new Buttplug.ButtplugClient("BCBridge");
 
 client.addListener("deviceadded", async (device) => {
-  console.log(`Device Connected: ${device.name}`);
+  // console.log(`Device Connected: ${device.name}`);
+  console.log(`Device Connected: ${JSON.stringify(device, null, 2)}`);
 
   let baseIndex = 0;
   client.devices.forEach((device) =>
@@ -163,7 +164,20 @@ client.addListener("disconnect", async () => {
 });
 
 // WebSocket connection
-wss.on("connection", (ws) => {
+wss.on("connection", (ws, req) => {
+  const ip = req.socket.remoteAddress;
+
+  // Check if the IP is local
+  if (
+    !ip.startsWith("127.0.0.1") &&
+    !ip.startsWith("::1") &&
+    !ip.startsWith("::ffff:127.0.0.1")
+  ) {
+    console.log("Rejected non-local connection from:", ip);
+    ws.close();
+    return;
+  }
+
   clients.push(ws);
   // Inside the 'connection' event handler of the WebSocket server
   ws.on("message", async (message) => {
@@ -281,8 +295,8 @@ wss.on("connection", (ws) => {
 });
 
 const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`+ BC-Bridge v0.5.0 Started +`);
+server.listen(port, "127.0.0.1", () => {
+  console.log(`+ BC-Bridge v0.5.1 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
@@ -450,7 +464,7 @@ function ws2SendRequest(data) {
                 ? "clockwise"
                 : "counterclockwise";
               targetDevice.rotate(parsedData.speed, newDirectionIsClockwise);
-
+              targetDevice.os;
               // Update timestamp if direction changed
               if (newDirectionIsClockwise !== (lastRotation === "clockwise")) {
                 lastRotationChangeTimestamp = currentTime2;
@@ -551,7 +565,19 @@ function startWebSocketServer() {
   if (!wsss) {
     wsss = new WebSocket.Server({ port: 12300 });
 
-    wsss.on("connection", (wss2) => {
+    wsss.on("connection", (wss2, req) => {
+      const ip = req.socket.remoteAddress;
+
+      // Check if the IP is local
+      if (
+        !ip.startsWith("127.0.0.1") &&
+        !ip.startsWith("::1") &&
+        !ip.startsWith("::ffff:127.0.0.1")
+      ) {
+        console.log("Rejected non-local connection from:", ip);
+        wss2.close();
+        return;
+      }
       console.log("Client connected");
       sendMessageToRenderer("toast", "Client connected", "#008E2C");
       wss2.on("message", (message) => {
@@ -1810,6 +1836,22 @@ function handlePiShockPostLevels(
 
 // Post a request to postRequest
 function PiShockPost(data) {
+  // Ensure Intensity, Duration, and Op are integers
+  data.Intensity = parseInt(data.Intensity, 10);
+  data.Duration = parseInt(data.Duration, 10);
+  data.Op = parseInt(data.Op, 10);
+
+  // Check for NaN and provide default values
+  if (isNaN(data.Intensity)) {
+    data.Intensity = 0;
+  }
+  if (isNaN(data.Duration)) {
+    data.Duration = 0;
+  }
+  if (isNaN(data.Op)) {
+    data.Op = 0;
+  }
+  console.log(data);
   postRequest(data)
     .then((data) => sendMessageToRenderer("toast", data, "#475569"))
     .catch((error) => sendMessageToRenderer("toast", error, "#7B0000"));
