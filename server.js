@@ -50,7 +50,6 @@ const xtoyminValues = {
 };
 
 //#region Global Variables
-let OnTrue = false;
 
 let MainSettings = {
   Intiface: {
@@ -296,7 +295,7 @@ wss.on("connection", (ws, req) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, "127.0.0.1", () => {
-  console.log(`+ BC-Bridge v0.5.1 Started +`);
+  console.log(`+ BC-Bridge v0.5.2 Started +`);
   console.log(
     `- Visit http://localhost:${port}  or  http://127.0.0.1:${port} in a web browser`
   );
